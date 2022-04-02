@@ -11,7 +11,7 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'arme Ritter', 'einen Festtagsbraten mit Klößen', 'Pommes mit Majo', 'leckeren Kartoffelauflauf',
                      'Krabben-Cocktail', 'einen Toast Hawaii', 'indisches Lamm Curry', 'einen Gyrosteller mit Tsatsiki',
                      'ein Pilz-Risotto', 'ein hart gekochtes Ei', 'vier Pralinen mit Nougatfüllung', 'eine kalte Bockwurst',
-                     'ein paar Mini-Frühlingsrollen', 'einen Glückskeks mit dem Spruch \"Du wirst heute nicht satt.\" ',
+                     'ein paar Mini-Frühlingsrollen',
                      'würziges Kassler mit Sauerkraut', 'ein Schälchen Apfelmus', 'Bratkartoffeln', 'asiatisches Wokgemüse',
                      'einen fruchtigen Lolli', 'einen Teller mit süßem Milchreis', 'eine Lasagne', 'chinesisch gebratene Nudeln',
                      'ein Thunfisch-Baguette', 'fünf mexikanische Tacos', 'einen Blaubeermuffin mit Sahne', 'eine Hand voll alte Erdnüsse',
@@ -27,7 +27,7 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'ein Teller Paella','einen Berg Pfannkuchen','ein Teller Belgische Waffeln mit Schokosoße',
                      'eine Waffel mit Puderzucker', 'Grießbrei mit Amarena Kirschen',
                      'einen Kaiserschmarrn mit Apfelmus', 'Palatschinken mit Marillenmarmelade und Staubzucker',
-                     'eine Tüte Maiswaffeln','eine Packung Schoko Keksi'
+                     'eine Tüte Maiswaffeln','eine Packung Schoko Keksi','einen Handkäs mit Musik'
          ]
 
 

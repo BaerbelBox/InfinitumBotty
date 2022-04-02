@@ -37,12 +37,13 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'einen kalt gezogenen grünen Tee','ein Glas Brackwasser',
                      'einen Pappbecher frischen Kaffee mit Sojamilch','einen Becher des Lieblingsgetränkes',
                      'ein Glas frisch gepressten Traubensaft','ein Glas mit zimmerwarmer Hafermilchschokolade',
-                     'ein sehr großes Glas mit Fassbrause','einen Bubble Tea in einem billigen Plastikbecher',
+                     'einen Bubble Tea in einem billigen Plastikbecher',
                      'eine Tasse Rooibostee', 'einen Rainbow-Cocktail', 'einen Virgin Sunrise',
                      'eine Apfelschorle','einen Birnensaft','einen Mangosaft',
                      'ein Glas Holunderblütensirup', 'eine Sauerkirschlimo', 'ein Glas gefrorenes Wasser',
                      'eine bunte Tasse fairtrade Bohnenkaffee','einen Maracujasaft','ein Glas Luft',
                      'ein Glas fairtrade Limonade','eine Cola Light', 'ein Glas Fanta light',
                      'ein Glas Sprite light', 'ein Glas Spezi light','eine dampfende Tasse Winterpunsch-Tee',
-                     'eine bunte Tasse Rooibos Schoko-Chai','eine Tasse Rooibos Chai'
+                     'eine bunte Tasse Rooibos Schoko-Chai','eine Tasse Rooibos Chai',
+                     'eine Tasse Fencheltee mit Honig'
                 ]
