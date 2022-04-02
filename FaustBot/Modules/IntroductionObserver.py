@@ -25,7 +25,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
         if not self.authenticated(nick, connection):
             connection.send_back("Für die Nutzung von .me ist es zwingend erforderlich, einen registrierten Nick zu "
                                  "haben sowie eingeloggt zu sein. Wie dies geht, erfährst du unter "
-                                 "https://freenode.net/kb/answer/registration", data)
+                                 "https://libera.chat/guides/registration", data)
             return
         intro_provider = IntroductionProvider()
         msg = msg.split('.me')[1].strip()

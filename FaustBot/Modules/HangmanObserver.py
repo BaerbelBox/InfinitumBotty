@@ -288,7 +288,5 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def giveExtraPointsInTime(self, nick):
         delta = time.time()-self.time
-        if delta <30:
-            self.addToScore(nick, 5)
         if delta <60:
-            self.addToScore(nick, 5)
+            self.addToScore(nick,int((60-delta)/6))
