@@ -141,11 +141,12 @@ class Connection(object):
         #print(self.irc.recv(512))
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :Botty \n".encode())
+        if (self.details.get_pwd() != ''):
+            self.send_to_user("NICKSERV", "identify " + self.details.get_nick() + " " + self.details.get_pwd() + ' ')
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("MODE ".encode()+self.details.get_nick().encode()+" -R".encode()+'\r\n'.encode())
-        if (self.details.get_pwd() != ''):
-            self.send_to_user("NICKSERV","identify "+self.details.get_nick()+" " +self.details.get_pwd()+' ')
+
 
         _thread.start_new_thread(self.sender, ())
 
