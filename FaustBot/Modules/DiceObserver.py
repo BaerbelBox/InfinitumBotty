@@ -27,8 +27,16 @@ class DiceObserver(PrivMsgObserverPrototype):
                 dice_sides = (data['message'].split(' ')[found_at_index + 1])
                 if dice_sides.isdigit():
                     dice_sides = int(dice_sides)
+                    if dice_sides == 0:
+                        connection.send_back(data['nick'] + ' wirft einen 0-seitigen Würfel und bekommt Unendlich.', data)
+                        return
+                    elif dice_sides < 0:
+                        connection.send_back(data['nick'] + ' wirft einen ' + str(dice_sides) + '-seitigen Würfel und nichts passiert.', data)
+                        return                
                 else:
                     dice_sides = 6
+        
         result = random.randint(1, dice_sides)
 
         connection.send_back(data['nick'] + ' wirft einen ' + str(dice_sides) + '-seitigen Würfel und bekommt ' + str(result), data)
+    
