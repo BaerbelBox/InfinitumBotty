@@ -8,18 +8,16 @@ from essen import essen
 from icecreamlist import icecream
 from extras import giveextras
 from snacks import snacks
-kekse = ['einen Schokoladenkeks', 'einen Vanillekeks', 'einen Doppelkeks',
-         'einen Keks', 'einen Erdbeerkeks', 'einen Schokoladen-Cheesecake-Keks',
-         'einen Glückskeks', 'einen Scherzkeks', 'einen Unglückskeks']
+from kekse import kekseGoodOnes
 
 class GiveDrinkToObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return [".givedrink"]
+        return [".give"]
 
     @staticmethod
     def help():
-        return ".givedrink NUTZER - schenkt jemand anders ein Getränke aus"
+        return ".give NUTZER - serviert jemand anderem Getränke oder Snacks"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.give') == -1:
@@ -29,7 +27,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
             type = data['message'].split()[2]
             if type is not None:
                 if type.lower() == "kaffee":
-                    connection.send_back('Fehler 418 Ich bin eine Teekanne', data)
+                    connection.send_back('Fehler 418: Ich bin eine Teekanne', data)
                     return
             connection.send_back('Bitte nutze .drink um dir selbst ein Getränk zu besorgen', data)
             return
@@ -51,7 +49,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                 return
             if type.lower() == "drink":
                 connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(getraenke) + '. Schöne Grüße von ' +
+                    '\001ACTION schenkt ' + receiver + ' ' + random.choice(getraenke) + ' ein. Schöne Grüße von ' +
                     data[
                         'nick'] + '\001', data)
                 return
@@ -65,7 +63,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
 
             if type.lower() == "cookie":
                 connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(kekse) + '. Schöne Grüße von ' +
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(kekseGoodOnes) + '. Schöne Grüße von ' +
                     data[
                         'nick'] + '\001', data)
                 return
@@ -79,7 +77,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                 connection.send_back(
                     '\001ACTION knetet ' + receiver + ' feste den Rücken durch. ' +
                     data[
-                        'nick'] + ' meinte ich solle dir was gutes tun. \001', data)
+                        'nick'] + ' meinte ich solle dir was Gutes tun. \001', data)
                 return
             for drink in getraenke+essen+icecream+giveextras+snacks:
                 if type.lower() in drink.lower():
@@ -94,5 +92,5 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                 connection.send_back(
                     'Tut mir leid ' + data['nick'] + ', '+ type+' haben wir nicht auf der Karte!', data)
                 return
-        connection.send_back('\001ACTION serviert ' + receiver + ' ' + random.choice(getraenkegoodones) + '. Schöne Grüße von '+data['nick']+'\001', data)
+        connection.send_back('\001ACTION schenkt ' + receiver + ' ' + random.choice(getraenkegoodones) + ' ein. Schöne Grüße von '+data['nick']+'\001', data)
 
