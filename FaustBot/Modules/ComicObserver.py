@@ -18,7 +18,7 @@ class ComicObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return '.comic liefer einen Link zu einem zufälligen Comic.'
+        return '.comic - liefert einen Link zu einem zufälligen Comic'
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.comic') == -1:
