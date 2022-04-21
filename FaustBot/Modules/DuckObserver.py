@@ -40,7 +40,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 return
             self.active = 0
             self.duck_alive = 0
-            connection.send_channel("Jagd beended")
+            connection.send_channel("Jagd beendet")
             return
         if data['message'].find('.ducks') != -1:
             connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
@@ -59,20 +59,20 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
             return
         if (self.duck_alive == 0 and self.active == 1):
-            connection.send_channel(data['nick']+ " probiert eine nicht existente Ente zu befreunden")
+            connection.send_channel(data['nick']+ " probiert eine nicht existente Ente zu befreunden.")
         if self.active == 0:
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
     def shoot(self, data, connection):
         if self.duck_alive == 1:
             if randint(1,100) >97:
-                connection.send_channel(data['nick'] + " trifft daneben")
+                connection.send_channel(data['nick'] + " trifft daneben.")
             else:
                 self.duck_alive = 0
                 self.ducks_hunt[data['nick']] += 1
                 connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
             return
         if (self.duck_alive == 0 and self.active == 1):
-            connection.send_channel(data['nick']+ " schiesst ins Nichts")
+            connection.send_channel(data['nick']+ " schießt ins Nichts.")
         if self.active == 0:
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
 
