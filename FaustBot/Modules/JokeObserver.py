@@ -6,19 +6,19 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 jokes = [['Was ist orange und geht über die Berge?'
 ,'Eine Wanderine.']
 ,['Was ist orange und schaut durchs Schlüsselloch?'
-,'Eine Spannderine.']
+,'Eine Spanndarine.']
 ,['Was ist violett und sitzt in der Kirche ganz vorne?'
 ,'Eine Frommbeere.']
 ,['Was ist grün und liegt im Sarg?'
 ,'Ein Sterbschen.']
 ,['Was ist bunt und läuft über den Tisch davon?'
 ,'Ein Fluchtsalat.']
-,['Was ist braun und schwimmt im Wasser?'
+,['Was ist braun und schwimmt unter Wasser?'
 ,'Ein U-Brot.']
 ,['Was ist schwarz/weiß und hüpft von Eisscholle zu Eisscholle?'
 ,'Ein Springuin.']
 ,['Was ist rot und sitzt auf dem WC?'
-,'Eine Klomate!']
+,'Eine Klomate.']
 ,['Was ist braun und fährt einen verschneiten Hang hinunter?'
 ,'Ein Snowbrot.']
 ,['Was ist braun und späht durchs Schlafzimmerfenster?'
@@ -69,10 +69,8 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Eine Ledermaus.']
 ,['Was macht "Muh" und hilft beim Anziehen?'
 ,'Ein Kuhlöffel.']
-,['Was ist viereckig, hat Noppen und einen Sprachfehler?'
-,'Ein Legosteniker.']
-,['Was ist gelb und immer bekifft?'
-,'Ein Bong-Frites.']
+,['Was ist viereckig, hat Noppen und eine Lese-Rechtschreibschwäche?'
+,'Ein Legostheniker.']
 ,['Was ist grün, glücklich und hüpft von Grashalm zu Grashalm?'
 ,'Eine Freuschrecke.']
 ,['Was ist ist braun, hat einen Beutel und hängt am Baum?'
@@ -81,114 +79,96 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Eine Mutorange']
 ,['Was ist gelb, ölig und und sitzt in der Kirche in der ersten Reihe?'
 ,'Eine Frommfrites']
-,['Was ist grün und irrt durch Istanbul?'
+,['Was ist grün und kommt aus Istanbul?'
 ,'Ein Gürke']
 ,['Was ist hellbraun und hangelt sich von Tortenstück zu Tortenstück?'
 ,'Ein Tarzipan.']
 ,['Was ist braun und klebt an der Wand?'
 ,'Ein Klebkuchen']
-,['Was ist rot und läuft die Straße auf und ab?'
-,'Eine Hagenutte.']
-,['Was ist weiss und läuft die Straße auf und ab?'
-,'Schneeflittchen.']
-,['Was ist grün und läuft die Straße auf und ab?'
-,'Eine Frosch-tituierte.']
-,['Was ist braun und trägt Strapse?'
-,'Ein Haselnüttchen.']
-,['Was ist gelb und steht frankiert und abgestempelt am Strassenrand?'
-,'Eine Postituierte.']
-,['Was leuchtet und geht fremd?'
-,'Ein Schlampion.']
 ,['Was ist gelb und rutscht den Hang hinunter?'
 ,'Ein Cremeschlitten.']
-,['Was ist weiss und tanzt ums Feuer?'
+,['Was ist weiß und tanzt ums Feuer?'
 ,'Rumpelpilzchen.']
-,['Was ist weiss und liegt schnarchend auf der Wiese?'
+,['Was ist weiß und liegt schnarchend auf der Wiese?'
 ,'Ein Schlaf.']
-,['Was ist gelb, saftig und sitzt bei jedem Fussballspiel vor dem Fernseher?'
+,['Was ist gelb, saftig und sitzt bei jedem Fußballspiel vor dem Fernseher?'
 ,'Eine Fananas.']
 ,['Was ist rosa und schwimmt im Wasser?'
 ,'Eine Meerjungsau.']
 ,['Was ist durchsichtig, stinkt und es ist ihm alles egal?'
 ,'Ein Schnurz.']
-,['Was ist unordentlich und gibt Licht?'
-,'Eine Schlampe.']
 ,['Was ist blöd, süß und bunt?'
 ,'Ein Dummibärchen.']
-,['Was trägt einen Frack und hilft im Haushalt?'
+,['Was ist paniert, trägt einen Frack und hilft im Haushalt?'
 ,'Ein Diener Schnitzel.']
 ,['Was ist silbrig, sticht und hat Spass daran?'
 ,'Eine Sadistel.']
 ,['Was ist gelb und kann schießen?'
-,'Eine Banone']
+,'Eine Banone.']
 ,['Was kommt nach Elch?'
-,'Zwölch']
+,'Zwölch.']
 ,['Was liegt am Strand und spricht undeutlich?'
-,'Eine Nuschel']
+,'Eine Nuschel.']
 ,['Was hüpft über die Wiese und raucht?'
-,'Ein Kaminchen']
+,'Ein Kaminchen.']
 ,['Was ist knusprig und liegt unterm Baum?'
-,'Schattenplätzle']
+,'Ein Schattenplätzle.']
 ,['Kleines Schwein das nach Hilfe schreit?'
-,'Ein Notrufsäule']
+,'Ein Notrufsäule.']
 ,['Was liegt am Strand und hat Schnupfen?'
-,'Eine Niesmuschel']
+,'Eine Niesmuschel.']
 ,['Was ist ein Cowboy ohne Pferd?'
-,'Ein Sattelschlepper']
-,['Was ist grün und trägt Kopftuch?'
-,'Eine Gürkin']
-,['Was ist rot und sitzt unterm Tisch?'
-,'Ne Paprikantin']
+,'Ein Sattelschlepper.']
 ,['Was ist schwarz-weiß und kommt nicht vom Fleck?'
-,'Ein Klebra']
+,'Ein Klebra.']
 ,['Was ist rosa, quiekt und wird zum Hausbau verwendet?'
-,'Ein Ziegelschwein']
+,'Ein Ziegelschwein.']
 ,['Wer ist bei jeder Wanderung betrunken?'
-,'Der Schlucksack']
+,'Der Schlucksack.']
 ,['Was ist rot und wiehert?'
-,'Die Pferdbeere']
+,'Die Pferdbeer.e']
 ,['Was ist weiß, blau, grün und steht auf der Wiese?'
-,'Eine Schlumpfdotterblume']
+,'Eine Schlumpfdotterblume.']
 ,['Was kaut und hat immer Verspätung?'
-,'Die Essbahn']
+,'Die Essbahn.']
 ,['Was fährt unter der Erde und macht Muh?'
-,'Die Kuhbahn']
+,'Die Kuhbahn.']
 ,['Was wühlt den Himmel auf?'
-,'Ein Pflugzeug']
+,'Ein Pflugzeug.']
 ,['Welche Frucht wächst im Gerichtssaal?'
-,'Advokado']
+,'Advokado.']
 ,['Wie nennt man einen “scharfen” Mann mit Kilt?'
-,'Chilischotte']
+,'Chilischotte.']
 ,['Was lebt im Meer und kann gut rechnen?'
-,'Der Octoplus']
+,'Der Octoplus.']
 ,['Was ist tiefergelegt und schwimmt unter wasser?'
-,'Der Tunefisch']
+,'Der Tunefisch.']
 ,['Was ist unter der Erde und stinkt?'
-,'Eine Furzel']
+,'Eine Furzel.']
 ,['Von was wird man nachts beobachtet?'
-,'Vom Spannbettlaken']
+,'Vom Spannbettlaken.']
 ,['Wo wohnen die meisten Katzen?'
-,'Im Miezhaus']
+,'Im Miezhaus.']
 ,['Warum ging der Luftballon kaputt?'
-,'Aus Platzgründen']
+,'Aus Platzgründen.']
 ,['Wie nennt man einen ausgehungerten Frosch?'
-,'Magerquak']
+,'Magerquak.']
 ,['Was macht ein Dieb im Zirkus?'
-,'Clown']
+,'Clown.']
 ,['Was macht ein Clown im Büro?'
-,'Faxen']
+,'Faxen.']
 ,['Wie nennt man eine Zauberin in der Wüste?'
-,'Sand Witch']
+,'Sand Witch.']
 ,['Wo betrinkt sich eine Mücke?'
-,'In Sekt']
+,'In Sekt.']
 ,['Warum können Seeräuber keine Kreise berechnen?'
-,'Weil sie pi raten']
+,'Weil sie pi raten.']
 ,['Was sitzt in der Savanne und wäscht sich?'
-,'Die Hygiäne']
+,'Die Hygiäne.']
 ,['Was sitzt im Dschungel und spielt unfair?'
-,'Mogli']
+,'Mogli.']
 ,['Wie nennt man den Paarungsruf von Leutstofflampen?'
-,'Neonröhren']]
+,'Neonröhren.']]
 
 
 class JokeObserver(PrivMsgObserverPrototype):
@@ -198,7 +178,7 @@ class JokeObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ".joke erzählt einen Flachwitz"
+        return ".joke - erzählt einen Flachwitz"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.joke') == -1:
