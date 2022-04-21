@@ -12,7 +12,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return 'hangman game'
+        return 'wordrun game'
 
     def __init__(self):
         super().__init__()
@@ -35,7 +35,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
 
     def add(self, data, connection):
         if self.gamestatus == 0:
-            connection.send_channel("Es läuft derzeit kein Wordrun, bitte einen neuen mit .begin <Silbe> oder .end <silbe> erstellen!")
+            connection.send_channel("Es läuft derzeit kein Wordrun, bitte einen neuen mit .begin <Silbe> oder .end <Silbe> erstellen!")
             return
         if self.gamestatus == 1 or self.gamestatus == 2:
             self.check_word(data["nick"], data['message'], connection)
@@ -56,7 +56,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
 
     def check_word(self,player , message, connection):
         for word in message.split():
-            if word == '.a':
+            if word == '.a' or word == '.add':
                 continue
             if self.gamestatus == 1:
                 if word.upper().startswith(self.syllable.upper()):
@@ -91,7 +91,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
                 print(p+" "+w)
                 player_score[p] += 1
         for p in self.player.keys():
-            s = s + p + " : "+str(player_score[p])+ "; "
+            s = s + p + ": "+str(player_score[p])+ "; "
         connection.send_channel(s)
         self.gamestatus = 0
         self.player = {}
