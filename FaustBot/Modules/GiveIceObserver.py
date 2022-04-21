@@ -12,7 +12,7 @@ class GiveIceObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ".ice - schenkt Eis"
+        return ".ice - serviert Eis"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.ice') == -1:

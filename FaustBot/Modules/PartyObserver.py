@@ -9,7 +9,7 @@ class PartyObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ".party - sorgt für Konfetti"
+        return ".party - bringt Stimmung in den Chat"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.party') == -1:
