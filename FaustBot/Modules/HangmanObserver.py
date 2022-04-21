@@ -43,7 +43,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.han_user_add(data, connection)
         if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1 \
                 and not data['message'].find('.stopMath') != -1:
-            connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word + " in: "+self.timeRelapsedString())
+            connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word + " in "+self.timeRelapsedString())
             self.word = ''
             self.guesses = []
             self.tries_left = 0
@@ -204,7 +204,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 failedChars += 1
         if failedChars == 0:
             if len(self.word) > 0:
-                outWord = "Das ist korrekt: " + self.word + " gelöst hat: "+data["nick"]+ " in : "+self.timeRelapsedString()
+                outWord = "Das ist korrekt: " + self.word + " gelöst hat: "+data["nick"]+ " in "+self.timeRelapsedString()
                 self.giveExtraPointsInTime(data["nick"])
                 self.addToScore(data['nick'], 5)
                 self.word = ''
@@ -236,16 +236,20 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if data['channel'] == connection.details.get_channel():
             connection.send_back("Spielregeln bitte im Query abfragen",data)
             return
-        connection.send_back("""Wort starten mit ".word Wort" im Query mit dem Bot""", data)
+        connection.send_back("""Wort starten mit ".word Wort" im Query (Privatchat) mit dem Bot""", data)
         connection.send_back("""Raten mit ".guess Buchstabe" im Channel""", data)
         connection.send_back("""Geraten werden können einzelne Buchstaben oder das ganze Wort.""", data)
         connection.send_back("""Alle dürfen durcheinander raten. Es gibt keine Reihenfolge.""", data)
-        connection.send_back("""".hint" gibt alle bereits falsch geratenen Buchstaben aus.""", data)
+        connection.send_back("""".hint" gibt alle bereits falsch geratenen Buchstaben und Wörter aus.""", data)
+        connection.send_back("""".look" zeigt das aktuell laufende Wort und alle bereits falsch geratenen Buchstaben und Wörter an.""", data)
         connection.send_back("""Bei 2 verbleibenden Versuchen darf nach einem Tipp vom Steller des Wortes gefragt 
         werden.""", data)
-        connection.send_back("""Wer ein Wort errät, darf das nächste stellen.""", data)
-        connection.send_back("""Wird ein Wort nicht gelöst, darf derjenige, der es gestellt hat, nochmal.""", data)
+        connection.send_back("""Wer ein Wort errät, darf das nächste aussuchen.""", data)
+        connection.send_back("""Wird ein Wort nicht gelöst, darf derjenige, der es ausgesucht hat, nochmal.""", data)
         connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind.""", data)
+        connection.send_back("""Mit ".score" kannst du deinen Punktestand abfragen.""", data)
+        connection.send_back("""Mit ".resetscore" kannst du deinen Punktestand löschen.""", data)
+
 
     def getScore(self, nick:str):
         score_provider = ScoreProvider()
