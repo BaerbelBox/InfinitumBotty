@@ -13,11 +13,11 @@ import datetime
 class HangmanObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.guess', '.word', '.stop', '.hint', '.score', '.spielregeln']
+        return ['.word', '.han', '.guess', '.hint', '.look' '.stop', '.score', '.resetscore', '.spielregeln']
 
     @staticmethod
     def help():
-        return 'hangman game'
+        return 'Hangman Spiel. Details bitte per PM an den Bot mit .spielregeln abfragen.'
 
     def __init__(self):
         super().__init__()
@@ -31,18 +31,18 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.time = time.time()
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.guess ') != -1:
+        if data['message'].startswith('.guess '):
             self.guess(data, connection)
             return
-        if data['message'].find('.word ') != -1:
+        if data['message'].startswith('.word '):
             self.take_word(data, connection)
-        if data['message'].find('.han') != -1 and not data['message'].find('.handelete')!= -1 and not data['message'].find('hanadd'
+        if data['message'].startswith('.han') and not data['message'].find('.handelete')!= -1 and not data['message'].find('hanadd'
         ) != -1:
             self.start_solo_game(data, connection)
-        if data['message'].find('hanadd') != -1:
+        if data['message'].startswith('.hanadd'):
             self.han_user_add(data, connection)
-        if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1 \
-                and not data['message'].find('.stopMath') != -1:
+        if data['message'].startswith('.stop') and not data['message'].find('.stophunt') != -1 \
+                and not data['message'].find('.stopmath') != -1 and not data['message'].find('.stopslf') != -1:
             connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word + " in "+self.timeRelapsedString())
             self.word = ''
             self.guesses = []
@@ -51,17 +51,19 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.worder = ''
             self.wrongly_guessedWords = []
             self.worder = ''
-        if data['message'].find('.hint') != -1:
+        if data['message'].startswith('.hint'):
             self.hint(data, connection)
-        if data['message'].find('.score') != -1:
+        if data['message'].startswith('.score'):
             self.print_score(data, connection)
-        if data['message'].find('.spielregeln') != -1:
+        if data['message'].startswith('.spielregeln'):
             self.rules(data, connection)
-        if data['message'].find('.look') != -1:
+        if data['message'].startswith('.look'):
             self.look(data, connection)
-        if data['message'].find('.resetscore') != -1:
-            self.reset(data,connection)
-        if data['message'].find('.handelete') != -1:
+        if data['message'].startswith('.resetscore'):
+            self.confirm_reset(data,connection)
+        if data['message'] == '.resetscore ' + data['nick'] + ' JA':
+            self.reset(data, data['nick'], connection)
+        if data['message'].startswith('.handelete '):
             self.delete_HanWord(data, connection)
 
     def delete_HanWord(self,data,connection):
@@ -73,10 +75,14 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.deleteHanWord(data['message'].split(' ')[1].upper())
             connection.send_back("Das Wort "+data['message'].split(' ')[1].upper()+" wurde gelöscht, " + data['nick'], data)
 
-    def reset(self,data,connection):
+    def reset(self, data, connection):
         score_provider = ScoreProvider()
         score_provider.delete_score(data['nick'])
         connection.send_back("Dein Score wurde gelöscht "+data['nick'], data)
+
+    def confirm_reset(self, data, connection):
+        connection.send_back('Möchtest du deinen Hangman Punktestand wirklich löschen, ' + data['nick'] + '? ' +
+        'Wenn ja, antworte bitte mit ".resetscore deinnick JA". Wenn nein, musst du nichts tun.')
 
     def look(self,data, connection):
         if self.worder != '':
@@ -189,10 +195,12 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_channel(self.prepare_word(data))
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
+    
     def han_user_add(self, data, connection):
         if data['message'].split(' ')[1] is not None:
             self.addHanWord(data['message'].split(' ')[1].upper())
             connection.send_channel("Das Wort "+data['message'].split(' ')[1].upper() +" wurde von "+ data['nick']+ " hinzugefügt")
+    
     def prepare_word(self, data):
         outWord = ""
         failedChars = 0
@@ -237,6 +245,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_back("Spielregeln bitte im Query abfragen",data)
             return
         connection.send_back("""Wort starten mit ".word Wort" im Query (Privatchat) mit dem Bot""", data)
+        connection.send_back("""Solospiel starten mit ".han" - Botty sucht dann das Wort aus""", data)
         connection.send_back("""Raten mit ".guess Buchstabe" im Channel""", data)
         connection.send_back("""Geraten werden können einzelne Buchstaben oder das ganze Wort.""", data)
         connection.send_back("""Alle dürfen durcheinander raten. Es gibt keine Reihenfolge.""", data)
