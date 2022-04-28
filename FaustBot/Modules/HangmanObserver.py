@@ -3,6 +3,7 @@ from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Model.ScoreProvider import ScoreProvider
 from FaustBot.Model.HanDatabaseProvider import HanDatabaseProvider
+from FaustBot.Modules.HelpObserver import HelpObserver
 from collections import defaultdict
 from threading import Lock
 import csv
@@ -29,6 +30,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.worder = ''
         self.wrongly_guessedWords = []
         self.time = time.time()
+        self.commands = []
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].startswith('.guess '):
@@ -59,10 +61,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.rules(data, connection)
         if data['message'].startswith('.look'):
             self.look(data, connection)
-        if data['message'].startswith('.resetscore'):
-            self.confirm_reset(data,connection)
+        if data['message'].startswith('.resetscore') and len(data['message'].split(' ')) < 2:
+            self.confirm_reset(data, connection)
         if data['message'] == '.resetscore ' + data['nick'] + ' JA':
-            self.reset(data, data['nick'], connection)
+            self.reset(data, connection)
         if data['message'].startswith('.handelete '):
             self.delete_HanWord(data, connection)
 
@@ -78,11 +80,12 @@ class HangmanObserver(PrivMsgObserverPrototype):
     def reset(self, data, connection):
         score_provider = ScoreProvider()
         score_provider.delete_score(data['nick'])
-        connection.send_back("Dein Score wurde gelöscht "+data['nick'], data)
+        connection.send_back("Dein Score wurde gelöscht, "+data['nick'], data)
 
     def confirm_reset(self, data, connection):
         connection.send_back('Möchtest du deinen Hangman Punktestand wirklich löschen, ' + data['nick'] + '? ' +
-        'Wenn ja, antworte bitte mit ".resetscore deinnick JA". Wenn nein, musst du nichts tun.')
+        'Wenn ja, antworte bitte mit ".resetscore deinnick JA". Wenn nein, musst du nichts tun.', data)
+        print(data['message'])
 
     def look(self,data, connection):
         if self.worder != '':
@@ -177,22 +180,23 @@ class HangmanObserver(PrivMsgObserverPrototype):
         connection.send_channel(self.prepare_word(data))
 
     def take_word(self, data, connection):
+        self.commands = HelpObserver.collect_commands(self, connection)
         if self.word == '':
             self.time =time.time()
-            if data['message'].split(' ')[1] is not None:
+            if data['message'].split(' ')[1] is not None and data['message'].split(' ')[1] not in self.commands:
                 self.addHanWord(data['message'].split(' ')[1].upper())
-            log = open('HangmanLog', 'a')
-            log.write(data['nick'] + ' ; ' + data['message'].split(' ')[1].upper() + '\n')
-            log.close()
-            self.word = data['message'].split(' ')[1].upper()
-            self.guesses = ['-', '/', ' ', '_','.']
-            self.wrong_guessed = []
-            self.tries_left = 11
-            self.wrongly_guessedWords = []
-            connection.send_back("Danke für das Wort, es ist nun im Spiel!", data)
-            connection.send_channel("Das Wort ist von: "+data['nick'])
-            self.worder = data['nick']
-            connection.send_channel(self.prepare_word(data))
+                log = open('HangmanLog', 'a')
+                log.write(data['nick'] + ' ; ' + data['message'].split(' ')[1].upper() + '\n')
+                log.close()
+                self.word = data['message'].split(' ')[1].upper()
+                self.guesses = ['-', '/', ' ', '_','.']
+                self.wrong_guessed = []
+                self.tries_left = 11
+                self.wrongly_guessedWords = []
+                connection.send_back("Danke für das Wort, es ist nun im Spiel!", data)
+                connection.send_channel("Das Wort ist von: "+data['nick'])
+                self.worder = data['nick']
+                connection.send_channel(self.prepare_word(data))
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
     
