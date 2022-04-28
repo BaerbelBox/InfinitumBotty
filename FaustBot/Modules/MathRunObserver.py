@@ -6,11 +6,11 @@ from time import sleep
 class MathRunObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.s', '.startMath', '.stopMath']
+        return ['.s', '.startmath', '.stopmath']
 
     @staticmethod
     def help():
-        return 'startMath startet eine Reihe von Aufgaben. StopMath beendet sie.'
+        return '.startmath startet eine Reihe von Aufgaben. .stopmath beendet sie. Lösungen mit ".s Lösung" eingeben.'
 
     def __init__(self):
         super().__init__()
@@ -23,7 +23,7 @@ class MathRunObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.s ') != -1 :
             self.solution(data, connection)
-        if data['message'].find('.startMath') != -1:
+        if data['message'].find('.startmath') != -1:
             self.start_math(data, connection)
 
     def solution(self, data, connection):
