@@ -8,11 +8,11 @@ from time import sleep
 class WordRunObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.a', '.add', '.begin', '.end']
+        return ['.a', '.add', '.begin', '.end', '.wordrun']
 
     @staticmethod
     def help():
-        return 'wordrun game'
+        return 'Wordrun Spiel. Starten mit ".begin <Silbe>" oder ".end <Silbe>". Antwort hinzufügen mit ".a <Antwort>" oder ".add <Antwort>" Mehr Details mit ".wordrun" abfragen.'
 
     def __init__(self):
         super().__init__()
@@ -26,13 +26,15 @@ class WordRunObserver(PrivMsgObserverPrototype):
         self.syllable = ""
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.a ') != -1 or data['message'].find('.add ') != -1:
+          if data['message'].startswith('.a ') or data['message'].startswith('.add '):
             self.add(data, connection)
-        if data['message'].find('.begin ') != -1:
-            self.begin_word(data, connection)
-        if data['message'].find('.end ') != -1:
-            self.end_word(data, connection)
-
+            if data['message'].startswith('.begin '):
+                self.begin_word(data, connection)
+            if data['message'].startswith('.end '):
+                self.end_word(data, connection)
+            if data['message'].startswith('.wordrun'):
+                self.rules(data, connection)
+   
     def add(self, data, connection):
         if self.gamestatus == 0:
             connection.send_channel("Es läuft derzeit kein Wordrun, bitte einen neuen mit .begin <Silbe> oder .end <Silbe> erstellen!")
@@ -95,3 +97,15 @@ class WordRunObserver(PrivMsgObserverPrototype):
         connection.send_channel(s)
         self.gamestatus = 0
         self.player = {}
+
+    def rules(self, data, connection):
+        if data['channel'] == connection.details.get_channel():
+            connection.send_back("Spielregeln bitte im Query (Privatchat) mit dem Bot abfragen", data)
+            return
+        connection.send_back('Wordrun Spiel: So viele Wörter wie möglich finden, die mit der vorgegebenen Silbe anfangen oder aufhören.', data)
+        connection.send_back('Spiel starten mit ".begin <Silbe>", um ein Spiel zu starten, bei dem die Antworten mit <Silbe> anfangen müssen.', data)
+        connection.send_back('Spiel starten mit ".end <Silbe>", um ein Spiel zu starten, bei dem die Antworten mit <Silbe> enden müssen.', data)
+        connection.send_back('Antwort hinzufügen mit ".a <Antwort>" oder ".add <Antwort>"', data)
+        connection.send_back('Es können auch mehrere Antworten in einer Zeile angegeben werden', data)
+        connection.send_back('Das Spiel dauert 3 Minuten. Für jede gültige Antwort gibt es 1 Punkt.', data)
+
