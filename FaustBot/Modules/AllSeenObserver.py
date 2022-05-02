@@ -10,11 +10,11 @@ from FaustBot.Modules.UserList import UserList
 class AllSeenObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return [".seen"]
+        return [".allseen"]
 
     @staticmethod
     def help():
-        return ".seen <nick> - um abzufragen wann <nick> zuletzt hier war"
+        return ".allseen - um abzufragen, wann alle im Channel zuletzt aktiv waren (Nur von Moderatoren nutzbar)"
 
     def __init__(self, user_list: UserList):
         super().__init__()
