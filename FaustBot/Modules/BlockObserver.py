@@ -10,11 +10,11 @@ from FaustBot.Model.BlockedUsers import BlockProvider
 class BlockObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return [""]
+        return None
 
     @staticmethod
     def help():
-        return ""
+        return None
 
     def update_on_priv_msg(self, data, connection: Connection):
         if not self._is_idented_mod(data, connection):

@@ -6,11 +6,11 @@ from time import sleep
 class MathRunObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.s', '.startMath', '.stopMath']
+        return ['.s', '.startmath', '.stopmath']
 
     @staticmethod
     def help():
-        return 'startMath startet eine Reihe von Aufgaben. StopMath beendet sie.'
+        return '".startmath" startet eine Reihe von Aufgaben. ".stopmath" beendet sie. Lösungen mit ".s Lösung" eingeben.'
 
     def __init__(self):
         super().__init__()
@@ -21,16 +21,18 @@ class MathRunObserver(PrivMsgObserverPrototype):
         self.oldSolution = 0
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.s ') != -1 :
+        if data['message'].startswith('.s ') and not data['message'].startswith('.startmath') and not data['message'].startswith('.stopmath'):
             self.solution(data, connection)
-        if data['message'].find('.startMath') != -1:
+        if data['message'].startswith('.startmath'):
             self.start_math(data, connection)
+        if data['message'].startswith('.stopmath'):
+            self.stop_math(data, connection)
 
     def solution(self, data, connection):
         nick = data["nick"]
         solutionByPlayer = data['message'].split()[1]
         if solutionByPlayer is None:
-            connection.send_back("Sorry du hast keine Lösung angegeben " + nick, data)
+            connection.send_back("Du hast keine Lösung angegeben " + nick, data)
             return
         if solutionByPlayer == str(self.solutionForGame):
             connection.send_channel("Korrekte Lösung " + nick)
@@ -63,9 +65,13 @@ class MathRunObserver(PrivMsgObserverPrototype):
             self.stop_Timer(data, connection)
 
     def stop_math(self, data, connection):
+        
         for player in self.players.keys():
-            connection.send_channel(player + " hat\t" + str(self.players[player]) + "\t Punkte")
-        connection.send_channel("Spiel beendet")
+            if self.players[player] == 1:
+                connection.send_channel(player + " hat\t" + str(self.players[player]) + "\tPunkt")
+            else:
+                connection.send_channel(player + " hat\t" + str(self.players[player]) + "\tPunkte")
+        connection.send_channel("Mathrun beendet")
         self.players = {}
         self.solutionForGame = 0
         self.type = 0
@@ -73,4 +79,5 @@ class MathRunObserver(PrivMsgObserverPrototype):
 
     def stop_Timer(self, data, connection):
         sleep(120)
-        self.stop_math(data, connection)
+        if self.running:
+            self.stop_math(data, connection)
