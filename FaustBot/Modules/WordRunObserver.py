@@ -28,11 +28,11 @@ class WordRunObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data, connection: Connection):
           if data['message'].startswith('.a ') or data['message'].startswith('.add '):
             self.add(data, connection)
-            if data['message'].startswith('.begin '):
+          if data['message'].startswith('.begin '):
                 self.begin_word(data, connection)
-            if data['message'].startswith('.end '):
+          if data['message'].startswith('.end '):
                 self.end_word(data, connection)
-            if data['message'].startswith('.wordrun'):
+          if data['message'].startswith('.wordrun'):
                 self.rules(data, connection)
    
     def add(self, data, connection):

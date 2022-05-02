@@ -1,4 +1,3 @@
-from types import NoneType
 from FaustBot.Communication import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 

@@ -143,7 +143,6 @@ class Connection(object):
         self.irc.send("USER botty botty botty :Botty \n".encode())
         if (self.details.get_pwd() != ''):
             self.send_to_user("NICKSERV", "identify " + self.details.get_nick() + " " + self.details.get_pwd() + ' ')
-        time.sleep(3)
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("MODE ".encode()+self.details.get_nick().encode()+" -R".encode()+'\r\n'.encode())
