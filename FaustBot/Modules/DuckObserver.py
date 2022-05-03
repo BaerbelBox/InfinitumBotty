@@ -12,7 +12,9 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
 
     @staticmethod
     def help():
-        return 'duck game'
+        return 'Entenjagd. An einem zufälligen Zeitpunkt watschelt eine Ente durch den Chat. ' + \
+            'Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. ' + \
+                'Starten und stoppen können nur Moderatoren.'
 
     @staticmethod
     def get_module_types():
@@ -26,27 +28,26 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         self.ducks_befriend = defaultdict(int)
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.starthunt') != -1:
+        if data['message'].startswith('.starthunt'):
             if not self._is_idented_mod(data, connection):
                 connection.send_back("Dir fehlen leider die Rechte zum Starten der Jagd, " + data['nick'] + ".",data)
                 return
             self.active = 1
             connection.send_channel("Jagd eröffnet")
             return
-        if data['message'].find('.stophunt') != -1:
+        if data['message'].startswith('.stophunt'):
             if not self._is_idented_mod(data, connection):
-                connection.send_back("Dir fehlen leider die Rechte zum Stoppen der Jagd, " + data['nick'] + ".",
-                                     data)
+                connection.send_back("Dir fehlen leider die Rechte zum Stoppen der Jagd, " + data['nick'] + ".", data)
                 return
             self.active = 0
             self.duck_alive = 0
             connection.send_channel("Jagd beendet")
             return
-        if data['message'].find('.ducks') != -1:
+        if data['message'].startswith('.ducks'):
             connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
-        if data['message'].find('.freunde') != -1:
+        if data['message'].startswith('.freunde'):
             self.befriend(data, connection)
-        if data['message'].find('.schiessen') != -1:
+        if data['message'].startswith('.schiessen'):
             self.shoot(data, connection)
 
     def befriend(self, data, connection):
