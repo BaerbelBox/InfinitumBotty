@@ -3,7 +3,7 @@ from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
 from random import randint
-from collections import defaultdict
+from FaustBot.Model.DuckProvider import DucksProvider
 
 class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     @staticmethod
@@ -22,8 +22,6 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         super().__init__()
         self.active = 0
         self.duck_alive = 0
-        self.ducks_hunt = defaultdict(int)
-        self.ducks_befriend = defaultdict(int)
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.starthunt') != -1:
@@ -43,7 +41,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             connection.send_channel("Jagd beendet")
             return
         if data['message'].find('.ducks') != -1:
-            connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
+            connection.send_channel(self.build_duck_string(data['nick']))
         if data['message'].find('.freunde') != -1:
             self.befriend(data, connection)
         if data['message'].find('.schiessen') != -1:
@@ -55,8 +53,8 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(data['nick'] + " probiert eine Ente zu befreunden aber sie will nicht.")
             else:
                 self.duck_alive = 0
-                self.ducks_befriend[data['nick']] += 1
-                connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
+                self.addLivingDuck(data['nick'])
+                connection.send_channel(self.build_duck_string(data['nick']))
             return
         if (self.duck_alive == 0 and self.active == 1):
             connection.send_channel(data['nick']+ " probiert eine nicht existente Ente zu befreunden.")
@@ -68,8 +66,8 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(data['nick'] + " trifft daneben.")
             else:
                 self.duck_alive = 0
-                self.ducks_hunt[data['nick']] += 1
-                connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
+                self.addDeadDuck(data['nick'])
+                connection.send_channel(self.build_duck_string(data['nick']))
             return
         if (self.duck_alive == 0 and self.active == 1):
             connection.send_channel(data['nick']+ " schießt ins Nichts.")
@@ -79,10 +77,44 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     def update_on_ping(self, data, connection: Connection):
         if self.active == 0:
             return
-        if 1 == randint(1,11):
+        if 1 == randint(1,1):
             if self.duck_alive == 0:
                 connection.send_channel("*. *. *. * <<w°)> *. *. * Quack!")
                 self.duck_alive = 1
 
     def _is_idented_mod(self, data: dict, connection: Connection):
         return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+
+    def getLiving(self, nick: str):
+        duck_provider = DucksProvider()
+        duck = duck_provider.get_ducks(nick)
+        if duck is not None:
+            return duck[1]
+        else:
+            return 0
+
+    def getDead(self, nick: str):
+        duck_provider = DucksProvider()
+        duck = duck_provider.get_ducks(nick)
+        if duck is not None:
+            return duck[2]
+        else:
+            return 0
+
+    def addDeadDuck(self, nick:str):
+        self.writeDucks(nick, self.getLiving(nick), self.getDead(nick)+1)
+
+    def addLivingDuck(self,nick:str):
+        self.writeDucks(nick, self.getLiving(nick)+1, self.getDead(nick))
+
+    def writeDucks(self, nick: str, living: int, dead: int):
+        ducks_provider = DucksProvider()
+        ducks_provider.save_or_replace(nick, living, dead)
+
+    def build_duck_string(self, nick: str):
+        return nick + " hat schon " +str(self.getLiving(nick))+ " befreundete "+self.pluralEnte(self.getLiving(nick))+" und " + str(self.getDead(nick)) + " getötete "+self.pluralEnte(self.getDead(nick))
+
+    def pluralEnte(self, enten:int):
+        if enten == 1:
+            return "Ente"
+        return "Enten"
