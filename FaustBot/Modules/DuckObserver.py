@@ -77,7 +77,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     def update_on_ping(self, data, connection: Connection):
         if self.active == 0:
             return
-        if 1 == randint(1,11):
+        if 1 == randint(1,1):
             if self.duck_alive == 0:
                 connection.send_channel("*. *. *. * <<w°)> *. *. * Quack!")
                 self.duck_alive = 1
@@ -112,9 +112,19 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         ducks_provider.save_or_replace(nick, living, dead)
 
     def build_duck_string(self, nick: str):
-        return nick + " hat schon " +str(self.getLiving(nick))+ " befreundete "+self.pluralEnte(self.getLiving(nick))+" und " + str(self.getDead(nick)) + " getötete "+self.pluralEnte(self.getDead(nick))
-
-    def pluralEnte(self, enten:int):
-        if enten == 1:
-            return "Ente"
-        return "Enten"
+        duckstring = ""
+        livingDucks = self.getLiving(nick)
+        deadDucks = self.getDead(nick)
+        if livingDucks > 1:
+            duckstring = duckstring + nick + " hat schon " +str(livingDucks)+ " befreundete Enten und "
+        elif livingDucks == 1:
+            duckstring = duckstring + nick + " hat schon eine befreunde Ente und "
+        elif livingDucks == 0:
+            duckstring = duckstring + nick + " hat noch keine befreundeten Enten und "
+        if deadDucks > 1:
+            duckstring = duckstring + str(deadDucks) + " getötete Enten"
+        elif deadDucks == 1:
+            duckstring = duckstring +"eine getötete Ente"
+        elif deadDucks == 0:
+            duckstring = duckstring+"keine getöteten Enten"
+        return duckstring
