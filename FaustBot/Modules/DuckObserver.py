@@ -77,7 +77,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     def update_on_ping(self, data, connection: Connection):
         if self.active == 0:
             return
-        if 1 == randint(1,1):
+        if 1 == randint(1,15):
             if self.duck_alive == 0:
                 connection.send_channel("*. *. *. * <<w°)> *. *. * Quack!")
                 self.duck_alive = 1
