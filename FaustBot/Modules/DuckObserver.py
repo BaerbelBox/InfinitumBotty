@@ -132,38 +132,40 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         return duckstring
 
     def duckAchievments(self, nick, connection):
-        if getDead(nick) == 0:
-            if getLiving(nick) == 5:
+        dead = self.getDead(nick)
+        living  = self.getLiving(nick)
+        if dead == 0:
+            if living == 5:
                 connection.send_channel(nick + " hat den Titel 'kleiner Entenfreund' erreicht")
-            elif getLiving(nick) == 66:
+            elif living == 66:
                 connection.send_channel(nick + " hat den Titel 'Entenfreund' erreicht")
-            elif getLiving(nick) == 111:
+            elif living == 111:
                 connection.send_channel(nick + " hat den Titel 'großer Entenfreund' erreicht")
-            elif getLiving(nick) == 555:
+            elif living == 555:
                 connection.send_channel(nick + " hat den Titel 'Kleiner Entenmonarch' erreicht")
-            elif getLiving(nick) == 1111:
+            elif living == 1111:
                 connection.send_channel(nick + " hat den Titel 'Entenmonarch' erreicht")
 
-        if getLiving(nick) == 0:
-            if getDead(nick) == 5:
+        if living == 0:
+            if dead == 5:
                 connection.send_channel(nick + " hat den Titel 'kleiner Entenmörder' erreicht")
-            elif getDead(nick) == 66:
+            elif dead == 66:
                 connection.send_channel(nick + " hat den Titel 'Entenmörder' erreicht")
-            elif getDead(nick) == 111:
+            elif dead == 111:
                 connection.send_channel(nick + " hat den Titel 'großer Entenmörder' erreicht")
-            elif getDead(nick) == 555:
+            elif dead == 555:
                 connection.send_channel(nick + " hat den Titel 'kleiner Entenmassenmörder' erreicht")
-            elif getDead(nick) == 1111:
+            elif dead == 1111:
                 connection.send_channel(nick + " hat den Titel 'Entenmassenmörder' erreicht")
 
-        if getDead(nick) > 0 and getLiving(nick) > 0:
-            if getLiving(nick) + getDead(nick) == 5:
+        if dead > 0 and living > 0:
+            if living + dead == 5:
                 connection.send_channel(nick + " hat den Titel 'Enten könnten Angst vor dir haben' erreicht")
-            elif getLiving(nick) + getDead(nick) == 66:
+            elif living+ dead == 66:
                 connection.send_channel(nick + " hat den Titel 'Enten, Enten. So viele Enten' erreicht")
-            elif getLiving(nick) + getDead(nick) == 111:
+            elif living + dead == 111:
                 connection.send_channel(nick + " hat den Titel 'Ich liebe Enten' erreicht")
-            elif getLiving(nick) + getDead(nick) == 555:
+            elif living + dead == 555:
                 connection.send_channel(nick + " hat den Titel 'Auf dem Grill und als Freund. Enten sind mein Leben' erreicht")
-            elif getLiving(nick) + getDead(nick) == 1111:
+            elif living + dead == 1111:
                 connection.send_channel(nick + " hat den Titel 'Durchgespielt' erreicht")
