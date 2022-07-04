@@ -22,6 +22,8 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         super().__init__()
         self.active = 0
         self.duck_alive = 0
+        self.streak = 0
+        self.streakname = ""
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.starthunt') != -1:
@@ -169,3 +171,15 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(nick + " hat den Titel 'Auf dem Grill und als Freund. Enten sind mein Leben' erreicht")
             elif living + dead == 1111:
                 connection.send_channel(nick + " hat den Titel 'Durchgespielt' erreicht")
+
+        if nick == self.streakname:
+            self.streak+=1
+        else:
+            self.streak = 0
+
+        if self.streak == 3:
+            connection.send_channel(nick + " hat einen Lauf")
+        elif self.streak == 5:
+            connection.send_channel(nick + " ist nicht aufhaltbar")
+        elif self.streak == 15:
+            connection.send_channel(nick + " spielt wohl allein")
