@@ -176,6 +176,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             self.streak+=1
         else:
             self.streak = 0
+            self.streakname = nick
 
         if self.streak == 3:
             connection.send_channel(nick + " hat einen Lauf")
