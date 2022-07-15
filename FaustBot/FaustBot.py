@@ -53,7 +53,7 @@ class FaustBot(object):
         self.add_module(WordRunObserver.WordRunObserver())
         self.add_module(GiveIceObserver.GiveIceObserver())
         self.add_module(GiveDrinkToObserver.GiveDrinkToObserver())
-        self.add_module(Greeter.Greeter())
+        self.add_module(Greeter.Greeter(self.config.greeting))
         self.add_module(MathRunObserver.MathRunObserver())
         self.add_module(PartyObserver.PartyObserver())
         self.add_module(PrideObserver.PrideObserver())
