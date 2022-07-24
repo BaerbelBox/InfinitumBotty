@@ -45,7 +45,7 @@ class Config(object):
             for module in blacklist:
                 self._config_dict['blacklist'].append(module.strip())
         if 'greeting' not in self._config_dict:
-            self._config_dict['greeting'] = "Hallo "
+            self._config_dict['greeting'] = "Hallo"
     @property
     def lang(self):
         return self._config_dict["lang"]
