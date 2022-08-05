@@ -147,6 +147,10 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(nick + " hat den Titel 'Kleiner Entenmonarch' erreicht")
             elif living == 1111:
                 connection.send_channel(nick + " hat den Titel 'Entenmonarch' erreicht")
+            elif living == 2222:
+                connection.send_channel(nick + " hat den Titel 'großer Entenmonarch' erreicht")
+            elif living == 3333:
+                connection.send_channel(nick + " hat den Titel 'Enten veehren dich als ihre Gottheit!' erreicht")
 
         if living == 0:
             if dead == 5:
@@ -159,7 +163,10 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(nick + " hat den Titel 'kleiner Entenmassenmörder' erreicht")
             elif dead == 1111:
                 connection.send_channel(nick + " hat den Titel 'Entenmassenmörder' erreicht")
-
+            elif dead == 2222:
+                connection.send_channel(nick + " hat den Titel 'großer Entenmassenmörder' erreicht")
+            elif dead == 3333:
+                connection.send_channel(nick + " hat den Titel 'du musst Enten wirklich hassen' erreicht")
         if dead > 0 and living > 0:
             if living + dead == 5:
                 connection.send_channel(nick + " hat den Titel 'Enten könnten Angst vor dir haben' erreicht")
@@ -171,6 +178,10 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_channel(nick + " hat den Titel 'Auf dem Grill und als Freund. Enten sind mein Leben' erreicht")
             elif living + dead == 1111:
                 connection.send_channel(nick + " hat den Titel 'Durchgespielt' erreicht")
+            elif living + dead == 2222:
+                connection.send_channel(nick + " hat den Titel 'Immernoch im Spiel' erreicht")
+            elif living + dead == 3333:
+                connection.send_channel(nick + " hat den Titel 'Alter!' erreicht")
 
         if nick == self.streakname:
             self.streak+=1
