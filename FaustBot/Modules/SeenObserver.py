@@ -1,10 +1,8 @@
 import datetime
-import time
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from ..Model.i18n import i18n
 
 
 class SeenObserver(PrivMsgObserverPrototype):

@@ -1,6 +1,4 @@
 from wikipedia import wikipedia
-
-from FaustBot.Model.i18n import i18n
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
@@ -17,18 +15,16 @@ class WikiObserver(PrivMsgObserverPrototype):
 
         if data['message'].find('.w ') == -1:
             return
-        i18n_server = i18n()
-        w = wikipedia.set_lang(i18n_server.get_text('wiki_lang', lang=self.config.lang))
+        w = wikipedia.set_lang('de')
         q = data['message'].split(' ')
         query = ''
         for word in q:
             if word.strip() != '.w':
                 query += word + ' '
         w = wikipedia.search(query)
-        if w.__len__() == 0:  # TODO BUG BELOW, ERROR MESSAGE NOT SHOWN!
+        if w.__len__() == 0:
             connection.send_back(data['nick'] + ', ' +
-                                 i18n_server.get_text('wiki_fail',
-                                                      lang=self.config.lang),
+                                'ich habe dazu keinen eintrag gefunden!',
                                  data)
             return
         try:
