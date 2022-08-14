@@ -16,9 +16,10 @@ class Greeter(JoinObserverPrototype):
     def help():
         return None
 
-    def __init__(self):
+    def __init__(self, greeting):
         super().__init__()
         self.names = defaultdict(int)
+        self.greeting = greeting
 
     def update_on_join(self, data, connection: Connection):
         if data['channel'] == connection.details.get_channel():
@@ -27,5 +28,5 @@ class Greeter(JoinObserverPrototype):
                     connection.send_back("Herzlich Willkommen bei uns "+data['nick'],data)
                     self.names[data['nick']] = int(time.time())
                     return
-                connection.send_back("Hallo " + data['nick'], data)
+                connection.send_back(self.greeting+" " + data['nick'], data)
                 self.names[data['nick']] = int(time.time())
