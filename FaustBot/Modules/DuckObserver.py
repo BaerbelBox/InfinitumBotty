@@ -12,7 +12,9 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
 
     @staticmethod
     def help():
-        return 'duck game'
+        return 'Entenjagd. An einem zufälligen Zeitpunkt watschelt eine Ente durch den Chat. ' + \
+            'Diese kann mit .schiessen getötet oder mit .freunde angefreundet werden. Mit .ducks wird abgefragt, wie viele Enten man schon hat. ' + \
+                'Starten und stoppen können nur Moderatoren.'
 
     @staticmethod
     def get_module_types():
