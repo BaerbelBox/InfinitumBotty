@@ -46,6 +46,8 @@ class Config(object):
                 self._config_dict['blacklist'].append(module.strip())
         if 'greeting' not in self._config_dict:
             self._config_dict['greeting'] = "Hallo"
+        if 'first_greeting' not in self._config_dict:
+            self._config_dict['first_greeting'] = "Herzlich Willkommen bei uns, "
     @property
     def lang(self):
         return self._config_dict["lang"]
@@ -81,3 +83,7 @@ class Config(object):
     @property
     def greeting(self):
         return self._config_dict['greeting']
+
+    @property
+    def first_greeting(self):
+        return self._config_dict['first_greeting']
