@@ -1,5 +1,6 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
+from FaustBot.Model.UserProvider import UserProvider
 import time
 from collections import defaultdict
 
@@ -23,10 +24,12 @@ class Greeter(JoinObserverPrototype):
 
     def update_on_join(self, data, connection: Connection):
         if data['channel'] == connection.details.get_channel():
+            if data['nick'].find("Guest") != -1:
+                return
+            UProvider= UserProvider()
+            if(UProvider.get_characters(data['nick'])) < 100:
+                return
+        if data['channel'] == connection.details.get_channel():
             if int(time.time()) - self.names[data['nick']] > 28800:
-                if data['nick'].find("Neuling") != -1:
-                    connection.send_back("Herzlich Willkommen bei uns "+data['nick'],data)
-                    self.names[data['nick']] = int(time.time())
-                    return
                 connection.send_back(self.greeting+" " + data['nick'], data)
                 self.names[data['nick']] = int(time.time())
