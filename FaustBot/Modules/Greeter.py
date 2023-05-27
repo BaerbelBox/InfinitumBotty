@@ -32,4 +32,4 @@ class Greeter(JoinObserverPrototype):
         if data['channel'] == connection.details.get_channel():
             if int(time.time()) - self.names[data['nick']] > 28800:
                 connection.send_back(self.greeting+" " + data['nick'], data)
-                self.names[data['nick']] = int(time.time())
+            self.names[data['nick']] = int(time.time())
