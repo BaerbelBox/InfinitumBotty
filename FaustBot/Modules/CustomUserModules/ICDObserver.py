@@ -15,8 +15,6 @@ class ICDObserver(PrivMsgObserverPrototype):
         return None
 
     def get_icd(self, code):
-        if code == "C64" or code == "P20":
-            return ""
         icd10_codes = open('care_icd10_de.csv', 'r',encoding='utf8')
         icd10 = csv.reader(icd10_codes, delimiter=';', quotechar='"')
         for row in icd10:

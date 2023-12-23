@@ -12,7 +12,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return 'Wordrun Spiel. Starten mit ".begin <Silbe>" oder ".end <Silbe>". Antwort hinzufügen mit ".a <Antwort>" oder ".add <Antwort>" Mehr Details mit ".wordrun" abfragen.'
+        return 'Wordrun Spiel. Starten mit .begin <Silbe> oder .end <Silbe>. Antwort hinzufügen mit .a <Antwort> oder .add <Antwort> Mehr Details mit .wordrun im Query abfragen.'
 
     def __init__(self):
         super().__init__()
@@ -103,9 +103,9 @@ class WordRunObserver(PrivMsgObserverPrototype):
             connection.send_back("Spielregeln bitte im Query (Privatchat) mit dem Bot abfragen", data)
             return
         connection.send_back('Wordrun Spiel: So viele Wörter wie möglich finden, die mit der vorgegebenen Silbe anfangen oder aufhören.', data)
-        connection.send_back('Spiel starten mit ".begin <Silbe>", um ein Spiel zu starten, bei dem die Antworten mit <Silbe> anfangen müssen.', data)
-        connection.send_back('Spiel starten mit ".end <Silbe>", um ein Spiel zu starten, bei dem die Antworten mit <Silbe> enden müssen.', data)
-        connection.send_back('Antwort hinzufügen mit ".a <Antwort>" oder ".add <Antwort>"', data)
+        connection.send_back('Spiel starten mit .begin <Silbe>, um ein Spiel zu starten, bei dem die Antworten mit <Silbe> anfangen müssen.', data)
+        connection.send_back('Spiel starten mit .end <Silbe>, um ein Spiel zu starten, bei dem die Antworten mit <Silbe> enden müssen.', data)
+        connection.send_back('Antwort hinzufügen mit .a <Antwort> oder .add <Antwort>', data)
         connection.send_back('Es können auch mehrere Antworten in einer Zeile angegeben werden', data)
         connection.send_back('Das Spiel dauert 3 Minuten. Für jede gültige Antwort gibt es 1 Punkt.', data)
 
