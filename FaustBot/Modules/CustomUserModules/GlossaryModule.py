@@ -25,11 +25,11 @@ class GlossaryModule(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         msg = data['message']
-        if not -1 == msg.find(GlossaryModule._REMOVE_EXPLANATION):
+        if msg.startswith(GlossaryModule._REMOVE_EXPLANATION):
             self._remove_query(data, connection)
-        elif not -1 == msg.find(GlossaryModule._ADD_EXPLANATION):
+        elif msg.startswith(GlossaryModule._ADD_EXPLANATION):
             self._add_query(data, connection)
-        elif not -1 == msg.find(GlossaryModule._QUERY_EXPLANATION):
+        elif msg.startswith(GlossaryModule._QUERY_EXPLANATION):
             self._answer_query(data, connection)
 
     def _answer_query(self, data, connection: Connection):
