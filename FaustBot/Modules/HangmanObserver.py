@@ -29,22 +29,23 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.wrong_guessed = []
         self.worder = ''
         self.wrongly_guessedWords = []
-        self.time = time.time()
+        self.time = 0
         self.commands = []
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].startswith('.guess '):
+        messageLower = data['message'].lower()
+        if messageLower.startswith('.guess '):
             self.guess(data, connection)
             return
-        if data['message'].startswith('.word '):
+        if messageLower.startswith('.word '):
             self.take_word(data, connection)
-        if data['message'].startswith('.han') and not data['message'].find('.handelete')!= -1 and not data['message'].find('hanadd'
+        if messageLower.startswith('.han') and not messageLower.find('.handelete')!= -1 and not messageLower.find('hanadd'
         ) != -1:
             self.start_solo_game(data, connection)
-        if data['message'].startswith('.hanadd'):
+        if messageLower.startswith('.hanadd'):
             self.han_user_add(data, connection)
-        if data['message'].startswith('.stop') and not data['message'].find('.stophunt') != -1 \
-                and not data['message'].find('.stopmath') != -1 and not data['message'].find('.stopslf') != -1:
+        if messageLower.startswith('.stop') and not messageLower.find('.stophunt') != -1 \
+                and not messageLower.find('.stopmath') != -1 and not messageLower.find('.stopslf') != -1:
             connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word + " in "+self.timeRelapsedString())
             self.word = ''
             self.guesses = []
@@ -53,19 +54,19 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.worder = ''
             self.wrongly_guessedWords = []
             self.worder = ''
-        if data['message'].startswith('.hint'):
+        if messageLower.startswith('.hint'):
             self.hint(data, connection)
-        if data['message'].startswith('.score'):
+        if messageLower.startswith('.score'):
             self.print_score(data, connection)
-        if data['message'].startswith('.spielregeln'):
+        if messageLower.startswith('.spielregeln'):
             self.rules(data, connection)
-        if data['message'].startswith('.look'):
+        if messageLower.startswith('.look'):
             self.look(data, connection)
-        if data['message'].startswith('.resetscore') and len(data['message'].split(' ')) < 2:
+        if messageLower.startswith('.resetscore') and len(data['message'].split(' ')) < 2:
             self.confirm_reset(data, connection)
-        if data['message'] == '.resetscore ' + data['nick'] + ' JA':
+        if messageLower == '.resetscore ' + data['nick'] + ' JA':
             self.reset(data, connection)
-        if data['message'].startswith('.handelete '):
+        if messageLower.startswith('.handelete '):
             self.delete_HanWord(data, connection)
 
     def delete_HanWord(self,data,connection):
@@ -124,7 +125,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def start_solo_game(self, data, connection):
         if self.word == '':
-            self.time = time.time()
+            self.time = 0
             self.word = self.getRandomHanWord()
             self.guesses = ['-', '/', ' ', '_','.']
             self.wrong_guessed = []
@@ -145,6 +146,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_channel("Flüstere mir ein neues Wort mit .word WORT")
             return
         word_unique_chars = len(set(self.word))
+        if self.time == 0:
+            self.time = time.time()
         if guess == self.word:
             score = word_unique_chars * self.count_missing_unique()
             self.addToScore(data['nick'], int(score))
@@ -182,7 +185,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
     def take_word(self, data, connection):
         self.commands = HelpObserver.collect_commands(self, connection)
         if self.word == '':
-            self.time =time.time()
+            self.time = 0
             if data['message'].split(' ')[1] is not None and data['message'].split(' ')[1] not in self.commands:
                 self.addHanWord(data['message'].split(' ')[1].upper())
                 log = open('HangmanLog', 'a')

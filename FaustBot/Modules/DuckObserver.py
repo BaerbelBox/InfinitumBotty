@@ -28,14 +28,15 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         self.streakname = ""
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.starthunt') != -1:
+        messageLower=data['message'].lower()
+        if messageLower.find('.starthunt') != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back("Dir fehlen leider die Rechte zum Starten der Jagd, " + data['nick'] + ".",data)
                 return
             self.active = 1
             connection.send_channel("Jagd eröffnet")
             return
-        if data['message'].find('.stophunt') != -1:
+        if messageLower.find('.stophunt') != -1:
             if not self._is_idented_mod(data, connection):
                 connection.send_back("Dir fehlen leider die Rechte zum Stoppen der Jagd, " + data['nick'] + ".",
                                      data)
@@ -44,11 +45,11 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             self.duck_alive = 0
             connection.send_channel("Jagd beendet")
             return
-        if data['message'].find('.ducks') != -1:
+        if messageLower.find('.ducks') != -1:
             connection.send_channel(self.build_duck_string(data['nick']))
-        if data['message'].find('.freunde') != -1:
+        if messageLower.find('.freunde') != -1:
             self.befriend(data, connection)
-        if data['message'].find('.schiessen') != -1:
+        if messageLower.find('.schiessen') != -1:
             self.shoot(data, connection)
 
     def befriend(self, data, connection):
@@ -121,18 +122,24 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         duckstring = ""
         livingDucks = self.getLiving(nick)
         deadDucks = self.getDead(nick)
+        if livingDucks ==0 and deadDucks == 0:
+            return nick + " hat noch nicht an der Entenjagd teilgenommen"
         if livingDucks > 1:
-            duckstring = duckstring + nick + " hat schon " +str(livingDucks)+ " befreundete Enten und "
+            duckstring = duckstring + nick + " hat schon " +str(livingDucks)+ " befreundete Enten "
         elif livingDucks == 1:
-            duckstring = duckstring + nick + " hat schon eine befreundete Ente und "
+            duckstring = duckstring + nick + " hat schon eine befreundete Ente "
         elif livingDucks == 0:
-            duckstring = duckstring + nick + " hat noch keine befreundeten Enten und "
+            duckstring = duckstring +nick +" "
+        if deadDucks > 0 and livingDucks > 0:
+            duckstring = duckstring +"und "
+        if deadDucks > 0 and livingDucks == 0:
+            duckstring = duckstring +"hat "
         if deadDucks > 1:
             duckstring = duckstring + str(deadDucks) + " getötete Enten"
         elif deadDucks == 1:
             duckstring = duckstring +"eine getötete Ente"
         elif deadDucks == 0:
-            duckstring = duckstring+"keine getöteten Enten"
+            duckstring = duckstring+""
         return duckstring
 
     def duckAchievments(self, nick, connection):
