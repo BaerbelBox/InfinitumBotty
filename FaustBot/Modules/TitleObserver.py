@@ -18,7 +18,7 @@ class TitleObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         regex = "(?P<url>https?://[^\s]+)"
-        url = re.search(regex, data['message'])
+        url = re.search(regex, data['messageCaseSensitive'])
         if url is not None:
             url = url.group()
             print(url)

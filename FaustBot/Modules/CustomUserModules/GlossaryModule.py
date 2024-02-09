@@ -24,7 +24,7 @@ class GlossaryModule(PrivMsgObserverPrototype):
         self._config = config
 
     def update_on_priv_msg(self, data, connection: Connection):
-        msg = data['message']
+        msg = data['messageCaseSensitive']
         if msg.startswith(GlossaryModule._REMOVE_EXPLANATION):
             self._remove_query(data, connection)
         elif msg.startswith(GlossaryModule._ADD_EXPLANATION):
@@ -84,7 +84,7 @@ class GlossaryModule(PrivMsgObserverPrototype):
             connection.send_back("Dir fehlen leider die Rechte zum Hinzufügen von Einträgen, " + data['nick'] + ".",
                                  data)
             return
-        msg = data['message'].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
+        msg = data['messageCaseSensitive'].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
         split = msg.split(' ', 1)
         glossary_provider = GlossaryProvider()
         glossary_provider.save_or_replace(split[0], split[1])

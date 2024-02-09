@@ -1,5 +1,5 @@
 import _thread
-
+import copy
 from FaustBot.Communication.Observable import Observable
 from FaustBot import Modules
 from FaustBot.Model.BlockedUsers import BlockProvider
@@ -16,6 +16,8 @@ class PrivmsgObservable(Observable):
                 'raw_nick': raw_data.split(' PRIVMSG')[0][1:]}
         # 12 = :<raw_nick> PRIVMSG <channel> :<message>
         data['message'] = raw_data[data['raw_nick'].__len__() + data['channel'].__len__() + 12:]
+        data['messageCaseSensitive'] = copy.copy(data['message'])
+        data['message'] = data['message'].lower()
         data['command'] = 'irgendwas, das mit . oder .. anfängt oder so... oder das sollen module checken?'
         if self.user_list is None:
             return

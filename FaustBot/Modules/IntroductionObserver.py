@@ -18,7 +18,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
         return ".me - kann von registrierten Nutzern verwendet werden um eine Vorstellung zu speichern"
 
     def update_on_priv_msg(self, data, connection: Connection):
-        msg = data["message"]
+        msg = data['messageCaseSensitive']
         nick = data["nick"]
         if not msg.startswith(".me") and not msg.startswith(".me-"):
             return
