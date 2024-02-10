@@ -36,12 +36,12 @@ class JokeObserver(PrivMsgObserverPrototype):
         """
         if data['message'].find('.craft') == -1:
             return
-        connection.send_back("/me rennt in die Werkstatt!", data)
+        connection.send_back("\001ACTION rennt in die Werkstatt!\001", data)
         sleep(5)
-        connection.send_back("/me poltert herum!", data)
+        connection.send_back("\001ACTION poltert herum!", data)
 
         # Determine, what Botty has built (random wikipedia article)
-        erdbeerstreusel = wikipedia.random(1)
+        spiegelei = wikipedia.random(1)
         sleep(5)
         connection.send_back(
-                f"/me kommt zurück und hat {erdbeerstreusel} gebastelt.", data)
+                f"\001ACTION kommt zurück und hat {spiegelei} gebastelt.\001", data)
