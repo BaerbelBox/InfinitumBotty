@@ -90,15 +90,15 @@ class UserProvider(object):
     def _get_id(self, name):
         cursor = self.database_connection.cursor()
         try:
-            for id in cursor.execute("SELECT id FROM user WHERE name = ?", (name,)):
+            for id in cursor.execute("SELECT id FROM user WHERE name = ?", (name.lower(),)):
                 return id[0]
         except:
             return None
 
     def _create_user(self, name):
         cursor = self.database_connection.cursor()
-        cursor.execute("INSERT INTO user(name) VALUES (?)", (name,))
-        id = self._get_id(name)
+        cursor.execute("INSERT INTO user(name) VALUES (?)", (name.lower(),))
+        id = self._get_id(name.lower())
         cursor.execute("INSERT INTO user_stats(id, characters) VALUES (?, 0)", (id,))
         cursor.execute("INSERT INTO last_seen (id, last_seen) VALUES (?, 0)", (id,))
         self.database_connection.commit()
