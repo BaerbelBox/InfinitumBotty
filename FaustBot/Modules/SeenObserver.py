@@ -19,7 +19,7 @@ class SeenObserver(PrivMsgObserverPrototype):
             return
         if not self._is_idented_mod(data, connection):
             return
-        who = data['message'].split(' ')[1]
+        who = data['messageCaseSensitive'].split(' ')[1]
         user_provider = UserProvider()
         activity = user_provider.get_activity(who)
         output = data['nick']+": Ich habe "+who+" zuletzt am "+str(datetime.datetime.fromtimestamp(activity).strftime("%d.%m.%Y um %H:%M:%S"))+ ' Uhr gesehen'
