@@ -4,7 +4,7 @@ from FaustBot.Communication import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
-class JokeObserver(PrivMsgObserverPrototype):
+class BastelObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
         """
@@ -16,13 +16,13 @@ class JokeObserver(PrivMsgObserverPrototype):
         Returns:
             listener Python list with strings to listen for.
         """
-        listener = [".basteln", ".craft"]
+        listener = [".craft"]
 
         return listener
 
     @staticmethod
     def help():
-        return ".basteln - Botty bastelt etwas"
+        return ".craft - Botty bastelt etwas"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         """
@@ -41,7 +41,7 @@ class JokeObserver(PrivMsgObserverPrototype):
         connection.send_back("\001ACTION poltert herum!", data)
 
         # Determine, what Botty has built (random wikipedia article)
-        spiegelei = wikipedia.random(1)
+        crafted_object = wikipedia.random(1)
         sleep(5)
         connection.send_back(
-                f"\001ACTION kommt zurück und hat {spiegelei} gebastelt.\001", data)
+                f"\001ACTION kommt zurück und hat {crafted_object} gebastelt.\001", data)

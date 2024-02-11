@@ -6,7 +6,7 @@ from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookie
     UserList, WikiObserver, GiveDrinkObserver, GiveFoodObserver, ComicObserver, HelpObserver, \
     IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver, JokeObserver,TellObserver, WordRunObserver,\
     GiveIceObserver, GiveDrinkToObserver, Greeter, MathRunObserver, PartyObserver, PrideObserver, SnacksObserver, \
-    BlockObserver, LetterObserver, DiceObserver, First_Greeter, CharactersCountObserver
+    BlockObserver, LetterObserver, DiceObserver, First_Greeter, CharactersCountObserver, BastelObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -63,6 +63,7 @@ class FaustBot(object):
         self.add_module(LetterObserver.LetterObserver())
         self.add_module(DiceObserver.DiceObserver())
         self.add_module(CharactersCountObserver.CharactersCountObserver())
+        self.add_module(BastelObserver.BastelObserver())
     def run(self):
         self._setup()
         running = True
@@ -100,6 +101,6 @@ class FaustBot(object):
 
         if module_type == ModuleType.ON_NOTICE:
             return self._connection.notice_observable
-        
+
         if module_type == ModuleType.ON_MAGIC_NUMBER:
             return self._connection.magic_number_observable
