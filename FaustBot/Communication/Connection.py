@@ -2,6 +2,7 @@ import _thread
 import queue
 import socket
 import time
+import ssl
 from threading import Condition
 
 from FaustBot.Communication.JoinObservable import JoinObservable
@@ -20,7 +21,7 @@ class Connection(object):
     send_queue = queue.Queue()
     details = None
     irc = None
-
+    wraper = None
     def sender(self):
         while True:
             msg = self.send_queue.get()
@@ -135,9 +136,10 @@ class Connection(object):
         """
         establish the connection
         """
+        self.wraper = ssl.create_default_context()
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        self.irc.connect((self.details.get_server(), self.details.get_port()))
+        socker = socket.create_connection((self.details.get_server(), self.details.get_port()))
+        self.irc =self.wraper.wrap_socket(socker, server_hostname=self.details.get_server())
         #print(self.irc.recv(512))
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :Botty \n".encode())
