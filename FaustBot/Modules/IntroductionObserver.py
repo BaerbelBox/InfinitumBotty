@@ -19,8 +19,9 @@ class IntroductionObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         msg = data['messageCaseSensitive']
+        msgForCode = data['message']
         nick = data["nick"]
-        if not msg.startswith(".me") and not msg.startswith(".me-"):
+        if not msgForCode.startswith(".me") and not msgForCode.startswith(".me-"):
             return
         if not self.authenticated(nick, connection):
             connection.send_back("Für die Nutzung von .me ist es zwingend erforderlich, einen registrierten Nick zu "
@@ -28,7 +29,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
                                  "https://libera.chat/guides/registration", data)
             return
         intro_provider = IntroductionProvider()
-        msg = msg.split('.me')[1].strip()
+        msg = msgForCode.split('.me')[1].strip()
         if len(msg) == 0:
             intro = intro_provider.get_intro(nick)
             text = ""
@@ -42,6 +43,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
             intro_provider.delete_intro(nick)
             connection.send_back(nick + " dein Intro wurde gelöscht!", data)
         else:
+            msg = data['messageCaseSensitive'][3:]
             intro = msg.strip()
             intro_provider.save_or_replace(nick, intro)
             connection.send_back(
