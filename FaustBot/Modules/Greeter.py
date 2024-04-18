@@ -9,6 +9,10 @@ class Greeter(JoinObserverPrototype):
     A Class only reacting to pings
     """
 
+    greetings_dict = defaultdict(str)
+    greetings_dict['Luci'] = "Hewuu"
+    greetings_dict['pome'] = "Hewuu"
+    greetings_dict['Skadi'] = "Awoo"
     @staticmethod
     def cmd():
         return None
@@ -31,5 +35,9 @@ class Greeter(JoinObserverPrototype):
                 return
         if data['channel'] == connection.details.get_channel():
             if int(time.time()) - self.names[data['nick']] > 28800:
-                connection.send_back(self.greeting+" " + data['nick'], data)
+                if Greeter.greetings_dict[data['nick']] != "":
+                    connection.send_back(Greeter.greetings_dict[data['nick']]+" " + data['nick'], data)
+                else:
+                    connection.send_back(self.greeting+" " + data['nick'], data)
+
             self.names[data['nick']] = int(time.time())
