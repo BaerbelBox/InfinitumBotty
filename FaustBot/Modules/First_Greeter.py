@@ -1,7 +1,7 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
 from FaustBot.Model.UserProvider import UserProvider
-
+from time import sleep
 class First_Greeter(JoinObserverPrototype):
     """
     A Class only reacting to pings
@@ -22,8 +22,10 @@ class First_Greeter(JoinObserverPrototype):
     def update_on_join(self, data, connection: Connection):
         if data['channel'] == connection.details.get_channel():
             if data['nick'].find("Guest") != -1:
+                sleep(20)
                 connection.send_back(self.first_greeting + " " + data['nick'], data)
                 return
             UProvider= UserProvider()
             if(UProvider.get_characters(data['nick'])) < 100:
+                sleep(20)
                 connection.send_back(self.first_greeting + " " + data['nick'], data)
