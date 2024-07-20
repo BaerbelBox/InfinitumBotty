@@ -73,6 +73,12 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                     data[
                         'nick'] + '\001', data)
                 return
+            if type.lower() == "ice":
+                connection.send_back(
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(icecream) + '. Schöne Grüße von ' +
+                    data[
+                        'nick'] + '\001', data)
+                return
             if type.lower() == "massage":
                 connection.send_back(
                     '\001ACTION knetet ' + receiver + ' feste den Rücken durch. ' +
