@@ -10,6 +10,23 @@ from extras import giveextras
 from snacks import snacks
 from kekse import kekseGoodOnes
 
+
+def _servier(receiver,item,requester):
+    fluff_text = [" ohne zu kleckern",""," mit Begeisterung","",""," nach einer substantiellen Wartezeit"]
+    return "\001ACTION serviert {0} {1}{2}. Schöne Grüße von {3}\001".format(
+        receiver,item,random.choice(fluff_text),requester
+    )
+
+
+def _schenk(receiver,item,requester):
+    return "\001ACTION schenkt {0} {1} ein. Schöne Grüße von {2}\001".format(
+        receiver,item,requester
+    )
+
+
+non_good_serveables = getraenke + essen + icecream + giveextras + snacks
+
+
 class GiveDrinkToObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
@@ -19,84 +36,57 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
     def help():
         return ".give NUTZER - serviert jemand anderem Getränke oder Snacks"
 
-    def update_on_priv_msg(self, data: dict, connection: Connection):
-        if data['message'].find('.give') == -1:
+    def update_on_priv_msg(self,data ,connection: Connection):
+        if data["message"].find(".give") == -1:
             return
-        receiver = data['message'].split()[1]
-        if receiver == data['nick']:
-            type = data['message'].split()[2]
-            if type is not None:
-                if type.lower() == "kaffee":
-                    connection.send_back('Fehler 418: Ich bin eine Teekanne', data)
-                    return
-            connection.send_back('Bitte nutze .drink um dir selbst ein Getränk zu besorgen', data)
+        receiver = type = None
+        message_parts = data["message"].split()
+        if len(message_parts) >= 2:
+            receiver = message_parts[1]
+        if len(message_parts) >= 3:
+            type = message_parts[2].lower()
+        if receiver is None:
             return
-        if len(data['message'].split()) < 3:
-            connection.send_back(
-                '\001ACTION serviert ' + receiver + ' ' + random.choice(getraenkegoodones) + '. Schöne Grüße von ' + data[
-                    'nick'] + '\001', data)
-            return
-        type = data['message'].split()[2]
-        if type is not None:
-            matchingDrinks = []
-            for drink in getraenkegoodones:
-                if type.lower() in drink.lower():
-                    matchingDrinks.append(drink)
-            if matchingDrinks:
-                connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' + data[
-                        'nick'] + '\001', data)
-                return
-            if type.lower() == "drink":
-                connection.send_back(
-                    '\001ACTION schenkt ' + receiver + ' ' + random.choice(getraenke) + ' ein. Schöne Grüße von ' +
-                    data[
-                        'nick'] + '\001', data)
-                return
-
-            if type.lower() == "food":
-                connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(essen) + '. Schöne Grüße von ' +
-                    data[
-                        'nick'] + '\001', data)
-                return
-
-            if type.lower() == "cookie":
-                connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(kekseGoodOnes) + '. Schöne Grüße von ' +
-                    data[
-                        'nick'] + '\001', data)
-                return
-            if type.lower() == "snack":
-                connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(snacks) + '. Schöne Grüße von ' +
-                    data[
-                        'nick'] + '\001', data)
-                return
-            if type.lower() == "ice":
-                connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(icecream) + '. Schöne Grüße von ' +
-                    data[
-                        'nick'] + '\001', data)
-                return
-            if type.lower() == "massage":
-                connection.send_back(
-                    '\001ACTION knetet ' + receiver + ' feste den Rücken durch. ' +
-                    data[
-                        'nick'] + ' meinte ich solle dir was Gutes tun. \001', data)
-                return
-            for drink in getraenke+essen+icecream+giveextras+snacks:
-                if type.lower() in drink.lower():
-                    matchingDrinks.append(drink)
-            if matchingDrinks:
-                connection.send_back(
-                    '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' +
-                    data[
-                        'nick'] + '\001', data)
-                return
+        requester = data["nick"].lower()
+        if receiver == requester:
+            if type == "kaffee":
+                connection.send_back("Fehler 418: Ich bin eine Teekanne",data)
             else:
+                connection.send_back("Bitte nutze .drink um dir selbst ein Getränk zu besorgen",data)
+            return
+        if type is None:
+            connection.send_back(_schenk(receiver,random.choice(getraenkegoodones),requester),data)
+            return
+        if type in ["drink","food","cookie","snack","massage","ice"]:
+            if type == "drink":
+                connection.send_back(_schenk(receiver,random.choice(getraenke),requester),data)
+            elif type == "food":
+                connection.send_back(_servier(receiver,random.choice(essen),requester),data)
+            elif type == "cookie":
+                connection.send_back(_servier(receiver,random.choice(kekseGoodOnes),requester),data)
+            elif type == "snack":
+                connection.send_back(_servier(receiver,random.choice(snacks),requester),data)
+            elif type == "ice":
+                connection.send_back(_servier(receiver,random.choice(icecream),requester),data)
+            elif type == "massage":
                 connection.send_back(
-                    'Tut mir leid ' + data['nick'] + ', '+ type+' haben wir nicht auf der Karte!', data)
-                return
-        connection.send_back('\001ACTION schenkt ' + receiver + ' ' + random.choice(getraenkegoodones) + ' ein. Schöne Grüße von '+data['nick']+'\001', data)
+                    "\001ACTION knetet {0} feste den Rücken durch. {1} meinte ich solle dir was Gutes tun.\001".format(
+                        receiver,requester
+                    ),data
+                )
+            return
+        matchingGoodDrinks = [drink for drink in getraenkegoodones if type in drink.lower()]
+        if matchingGoodDrinks:
+            connection.send_back(_schenk(receiver,random.choice(matchingGoodDrinks),requester),data)
+            return
 
+        matchingServeables = [serveable for serveable in non_good_serveables if type in serveable.lower()]
+        if matchingServeables:
+            connection.send_back(_servier(receiver,random.choice(matchingServeables),requester),data)
+            return
+
+        connection.send_back(
+            "Tut mir leid {0}, {1} haben wir nicht auf der Karte!".format(
+                requester,type
+            ),data
+        )
