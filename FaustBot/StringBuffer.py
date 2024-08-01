@@ -10,7 +10,7 @@ class StringBuffer:
         ready = list()
         # Python do-while-loop
         idx = self._buffer.find('\n')
-        while idx is not -1:
+        while idx != -1:
             data = self._buffer[0:idx]  #
             data = data.strip()
             if len(data) >= 1:
