@@ -53,7 +53,7 @@ class TitleObserver(PrivMsgObserverPrototype):
                 '''"results":{"contents":\[{"videoPrimaryInfoRenderer":{"title":{"runs":\[{"text":"([^"]*)"'''
             )
         else:
-            title_re = re.compile("<title>(.+?)</title>")
+            title_re = re.compile("<title[^>]*>(.+?)</title>")
 
         req = urllib.request.Request(url, None, headers)
 
@@ -74,8 +74,8 @@ class TitleObserver(PrivMsgObserverPrototype):
         if title_matches:
             title = title_matches.group(1)
         else:
-            #with open("content.html", "w") as file:
-            #    file.write(content)
+            # with open("content.html", "w") as file:
+            #     file.write(content)
             raise Exception("Could not Parse Title for {}".format(url))
 
         title = html.unescape(title)
