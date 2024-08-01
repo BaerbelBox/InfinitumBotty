@@ -23,14 +23,7 @@ class TitleObserver(PrivMsgObserverPrototype):
             url = url.group()
             print(url)
             try:
-                headers = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-                }
-
-                url = url
-                req = urllib.request.Request(url, None, headers)
-                resource = urllib.request.urlopen(req)
-                title = self.getTitle(resource)
+                title = self.getTitle(url)
                 print(title)
                 title = title[:350]
                 connection.send_back(title, data)
@@ -38,28 +31,52 @@ class TitleObserver(PrivMsgObserverPrototype):
                 print(exc)
                 pass
 
-    def getTitle(self, resource):
-        encoding = resource.headers.get_content_charset()
-        url = resource.geturl()
-        # der erste Fall kann raus, wenn ein anderer Channel benutzt wird
-        if url.find("rehakids.de") != -1:
-            encoding = "windows-1252"
-        if not encoding:
-            encoding = "utf-8"
-        content = resource.read().decode(encoding, errors="replace")
+    def getTitle(self, url):
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+        }
 
-        if re.search("http[s]+://[^/]*youtube.com/", url):
+        if re.search("https?://\\[[^/]*", url):
+            raise (Exception("Refusing to parse bare IPv6 Addresses"))
+        if re.search("https?://[^/:]*:[^/:]*", url):
+            raise (Exception("Refusing to parse URLs with Ports"))
+        if re.search("https?://[0-9]+.[0-9]+.[0-9]+.[^/]*", url):
+            raise (Exception("Refusing to parse bare IPv4 Addresses"))
+        if re.search("https?://music.youtube.com/", url):
+            url = url.replace("music.youtube.com/", "www.youtube.com/", 1)
+
+        if re.search("https?://[^/]*youtube.com/shorts/", url):
+            title_re = re.compile('''"reelPlayerHeaderRenderer":{"reelTitleText":{"runs":\[{"text":"([^"]*)"''')
+            headers["User-Agent"] = "curl/7.81.0"
+        elif re.search("https?://[^/]*youtube.com/", url):
             title_re = re.compile(
                 '''"results":{"contents":\[{"videoPrimaryInfoRenderer":{"title":{"runs":\[{"text":"([^"]*)"'''
             )
         else:
             title_re = re.compile("<title>(.+?)</title>")
 
+        req = urllib.request.Request(url, None, headers)
+
+        # Keep the urlopen scope as short as possible (connection leaks)
+        with urllib.request.urlopen(req, timeout=10) as response:
+            encoding = response.headers.get_content_charset()
+            content_raw = response.read()
+
+        # der erste Fall kann raus, wenn ein anderer Channel benutzt wird
+        if url.find("rehakids.de") != -1:
+            encoding = "windows-1252"
+        if not encoding:
+            encoding = "utf-8"
+
+        content = content_raw.decode(encoding, errors="replace")
+
         title_matches = title_re.search(content)
         if title_matches:
             title = title_matches.group(1)
         else:
-            return "Could not Parse Title"
+            #with open("content.html", "w") as file:
+            #    file.write(content)
+            raise Exception("Could not Parse Title for {}".format(url))
 
         title = html.unescape(title)
         title = title.replace("\n", " ").replace("\r", "")
@@ -67,5 +84,5 @@ class TitleObserver(PrivMsgObserverPrototype):
         title = title.replace("&gt;", ">")
         title = title.replace("&amp;", "&")
         if title == "":
-            title = "Empty Title"
+            raise Exception("Empty Title for {}".format(url))
         return title
