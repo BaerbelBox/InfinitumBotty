@@ -76,7 +76,7 @@ class TitleObserver(PrivMsgObserverPrototype):
         else:
             # with open("content.html", "w") as file:
             #     file.write(content)
-            raise Exception("Could not Parse Title for {}".format(url))
+            raise Exception(f"Could not Parse Title for {url}")
 
         title = html.unescape(title)
         title = title.replace("\n", " ").replace("\r", "")
@@ -84,5 +84,5 @@ class TitleObserver(PrivMsgObserverPrototype):
         title = title.replace("&gt;", ">")
         title = title.replace("&amp;", "&")
         if title == "":
-            raise Exception("Empty Title for {}".format(url))
+            raise Exception(f"Empty Title for {url}")
         return title
