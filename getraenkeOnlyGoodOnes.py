@@ -32,6 +32,6 @@ getraenkegoodones = ['einen Kaffee in einer Tasse aus blauem Porzellan','eine Li
              "einen Apfelkuchen", "einen Pudding-Streuselkuchen", "einen Rhabarberstreuselkuchen",
              'ein Glas kalten Rooibos Tee mit Vanille verfeinert','eine bunt karierte Tasse Kaffee', 'einen Rainbow Cocktail in einem hohen Glas mit Schirmchen',
              'eine Apfelschorle mit frisch gepresstem Apfelsaft', 'eine bunt gestreifte Tasse Tee',
-             'ein Stilglas mit alkoholfreiem Sekt'
+             'ein Stilglas mit alkoholfreiem Sekt', 'ein Glas mit erfrischend sprudelndem SchwipSchwap'
              ]
 

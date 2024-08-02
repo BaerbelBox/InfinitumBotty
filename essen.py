@@ -195,7 +195,6 @@ essen = [
     'einen winzigen Muffin, der nicht so weich ist, wie er aussieht','ein Blech Papageienkuchen',
     'eine schief gewachsene gelbe Paprika','zwei gefüllte rote Paprikas','einen Teller weißen Schichtkohl',
     'Jakobsmuscheln mit schwarzem Trüffel und Haselnuss','einen in Miso marinierten und gebackenen schwarzen Kabeljau',
-    'Elmer Fudd mit einer auf dich gerichteten Schrotflinte','Pekingente mit Hoisin-Sauce',
     'klassisch in Bierteig frittierte Fish`n Chips','ein Stilleben aus Wachs','eine Schale ungewürztes Erbsenpüree',
     'ein gegrilltes Hähnchen mit einer würzigen Tomaten-Curry-Soße','eine kaum Licht spendende Waltranfunsel',
     'gedämpfte Miesmuscheln mit knusprigen Pommes','einen Geburtstagskuchen mit zu wenig Kerzen',
@@ -284,6 +283,7 @@ essen = [
     'einen dreckigen Deal','ein einschneidendes Erfolgserlebnis','einen Berg fettige Ringelpommes',
     'eine meterlange Gurkenspirale','eine Schale fein pürierter Selbstkontrolle','Nougat in Form von Meeresfrüchten',
     'einen Topf Matzah-Ball-Suppe','einen Laib geflochtenes Challah','eine XXL-Packung Merci',
+    'Pekingente mit Hoisin-Sauce',
 
 ]
 
