@@ -227,7 +227,7 @@ essen = [
     'das bei Alfred Biolek von Blixa Bargeld gekochte Risotto','das legendenumwobene Stück eines italienischen Rinds',
     'einen Rasenziegel','eine Mütze Schlaf','eine Portion Obatzter','eine Raffaello-Torte',
     'einen Tortenheber ohne Torte weit und breit','einen alten ledrigen linken Stiefel','eine Büste von Karl Marx',
-    'Kartoffelpüree aus der Tüte','eine ganze Zitrone','ein Schale Elefantencreme',
+    'Kartoffelpüree aus der Tüte','eine ganze Zitrone','eine Schale Elefantencreme',
     'geschichteten Schokopudding mit Waldbeeren','eine Mao-Bibel','zwei Stücke Champignon-Spinat-Lasagne',
     'eine Schale Haferbrei mit Honig','eine Schale Chiapudding mit Mango','eine weiche Birne','eine einzelne Walnuss',
     'eine sich in seinen Haaren verfangene Fledermaus','einen Hauch von Verachtung für die niederen Dinge im Leben',
