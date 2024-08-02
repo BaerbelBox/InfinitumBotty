@@ -6,7 +6,7 @@ Designed for non-technical channels
 ## Usage
 
 ### Requirements
- - Python 3.5
+ - Python 3.8+
  - pip
  - wikipedia package (can be installed using pip; tested with version 1.4.0)
  - virtualenv (optional)
