@@ -15,6 +15,8 @@ class GiveDrinkObserver(PrivMsgObserverPrototype):
         return ".drink - schenkt Getränke aus"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
-        if data['message'].find('.drink') == -1:
-            return
-        connection.send_back('\001ACTION schenkt ' + data['nick'] + ' ' + random.choice(getraenke) + ' ein.\001', data)
+        if data["message"].startswith(".drink"):
+            connection.send_back(
+                f"\001ACTION schenkt {data.get('nick')} {random.choice(getraenke)} ein.\001",
+                data,
+            )
