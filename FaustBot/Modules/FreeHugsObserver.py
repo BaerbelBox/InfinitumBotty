@@ -15,5 +15,5 @@ class FreeHugsObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data["message"].startswith(".hug"):
-            hug_word = random.choice(["umarmt", "knuddelt", "drückt"])
+            hug_word = random.choice(["umarmt", "knuddelt", "drückt", "herzt"])
             connection.send_back(f"\001ACTION {hug_word} {data['nick']}.\001", data)
