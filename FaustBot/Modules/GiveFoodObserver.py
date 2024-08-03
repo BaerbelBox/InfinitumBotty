@@ -15,6 +15,8 @@ class GiveFoodObserver(PrivMsgObserverPrototype):
         return ".food - gibt etwas zu essen aus"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
-        if data['message'].find('.food') == -1:
-            return
-        connection.send_back('\001ACTION tischt ' + data['nick'] + ' ' + random.choice(essen) + ' auf.\001', data)
+        if data["message"].startswith(".food"):
+            connection.send_back(
+                f"\001ACTION tischt {data['nick']} {random.choice(essen)} auf.\001",
+                data,
+            )

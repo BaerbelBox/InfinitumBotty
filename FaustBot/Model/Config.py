@@ -26,9 +26,9 @@ class Config(object):
         if not append:
             self._config_dict = {}
         for l in f.readlines():
-            kv_pair = l.split(':')
+            kv_pair = l.split(':', 1)
             if len(kv_pair) == 2:
-                self._config_dict[kv_pair[0].strip()] = kv_pair[1][:-1].strip()
+                self._config_dict[kv_pair[0].strip()] = kv_pair[1].strip()
         mods = self._config_dict['mods'].split(',')
         self._config_dict['mods'] = []
         for mod in mods:

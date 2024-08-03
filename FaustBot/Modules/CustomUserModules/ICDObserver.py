@@ -6,6 +6,12 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class ICDObserver(PrivMsgObserverPrototype):
+    with open("care_icd10_de.csv", "r", encoding="utf8") as icd10_codes:
+        icd10_dict = {
+            row[0]: row[1]
+            for row in csv.reader(icd10_codes, delimiter=";", quotechar='"')
+        }
+
     @staticmethod
     def cmd():
         return None
@@ -14,27 +20,18 @@ class ICDObserver(PrivMsgObserverPrototype):
     def help():
         return None
 
-    def get_icd(self, code):
-        icd10_codes = open('care_icd10_de.csv', 'r',encoding='utf8')
-        icd10 = csv.reader(icd10_codes, delimiter=';', quotechar='"')
-        for row in icd10:
-            if row[0] == code:
-                return code +' - ' + row[1]
-        return 0
-
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['channel'] != connection.details.get_channel():
-            return
-        regex = r'\b(\w\d{2}\.?\d?\d?)\b'
-        codes = re.findall(regex, data['message'])
-        for code in codes:
-            code = code.capitalize()
-            text = self.get_icd(code)
-            if text == 0:
-                if code.find('.') != -1:
-                    code += '-'
-                else:
-                     code += '.-'
-            text = self.get_icd(code)
-            if text != 0:
-                connection.send_back(text, data)
+        if data["channel"] == connection.details.get_channel():
+            regex = r"\b(\w\d{2}\.?\d?\d?)\b"
+            codes = re.findall(regex, data["message"])
+            for code in codes:
+                code = code.capitalize()
+                text = self.icd10_dict.get(code, False)
+                if text == False:
+                    if "." in code:
+                        code += "-"
+                    else:
+                        code += ".-"
+                text = self.icd10_dict.get(code, False)
+                if text:
+                    connection.send_back(f"{code} - {text}", data)
