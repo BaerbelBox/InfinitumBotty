@@ -65,8 +65,8 @@ getraenke = [
     'ein Kännchen Guten-Morgen-Tee','ein unpraktisch kleines Tässchen Espresso',
     'einen doppelten Espresso mit zwei Zuckerwürfeln','einen vierfachen Espresso und einen Fallschirm',
     'einen Brombeersaft','ein kühles Glas Limettensaft','ein Glas vegane Erdbeermilch',
-    'einen Schokobrunnen','einen alkoholfreien Feigenpunsch'
-                          'ein Glas abgestandenes Leitungswasser','eine Handvoll Pfützenwasser',
+    'einen Schokobrunnen','einen alkoholfreien Feigenpunsch',
+    'ein Glas abgestandenes Leitungswasser','eine Handvoll Pfützenwasser',
     'eine Tasse türkischen Apfeltee','ein Glas fruchtigen Lycheesaft','zu sprudeliges Sprudelwasser',
     'eine Tasse russische heiße Schokolade','eine Handvoll geschmolzenen Schnee',
     'ein Glas mit aus der Dose abgetropftem Würstchenwasser','Constanzes pürierte Hoffnungen und Träume',
