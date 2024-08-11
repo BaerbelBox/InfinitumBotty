@@ -63,7 +63,7 @@ stop() {
   else
     echo "[=== bot is running "
     echo "[=== killing bot process "
-    kill $(cat .pid)
+    kill "$(cat .pid)"
     echo "[=== removing .pid file "
     rm .pid
   fi
