@@ -3,36 +3,44 @@ class ConnectionDetails(object):
         """
         :return: the server to connect to
         """
-        return self._data['server']
+        return self._data["server"]
+
+    def get_ssl(self):
+        """
+        :return: connect with ssl
+        """
+        if self._data["ssl"] != "false":
+            return "true"
+        return "false"
 
     def get_nick(self):
         """
         :return: own nick
         """
-        return self._data['nick']
+        return self._data["nick"]
 
     def get_channel(self):
         """
         :return: the channel connected into
         """
-        return self._data['channel']
+        return self._data["channel"]
 
     def get_port(self):
-        return int(self._data['port'])
+        return int(self._data["port"])
 
     def get_lang(self):
-        return self._data['lang']
+        return self._data["lang"]
 
     def change_lang(self, lang):
-        self._data['lang'] = lang
+        self._data["lang"] = lang
 
     def get_mods(self):
-        return self._data['mods']
+        return self._data["mods"]
 
     def get_pwd(self):
-        if self._data['pwd'] is None:
-            return ''
-        return self._data['pwd']
+        if self._data["pwd"] is None:
+            return ""
+        return self._data["pwd"]
 
     def __init__(self, config):
         self._data = config
