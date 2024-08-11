@@ -22,11 +22,12 @@ class Connection(object):
     details = None
     irc = None
     wraper = None
+
     def sender(self):
         while True:
             msg = self.send_queue.get()
-            if msg[-1] != b'\n':
-                msg = msg + b'\n'
+            if msg[-1] != b"\n":
+                msg = msg + b"\n"
             self.irc.send(msg)
             time.sleep(1)
 
@@ -35,14 +36,14 @@ class Connection(object):
         Send to channel
         :return:
         """
-        self.raw_send("PRIVMSG " + self.details.get_channel() + " :" + text[0:])
+        self.raw_send(f"PRIVMSG {self.details.get_channel()} :{text}")
 
     def send_to_user(self, user, text):
         """
         Send to user
         :return:
         """
-        self.raw_send('PRIVMSG ' + user + ' :' + text)
+        self.raw_send(f"PRIVMSG {user} :{text}")
 
     def send_back(self, text, data):
         """
@@ -51,13 +52,13 @@ class Connection(object):
         :param data: needed because of concurrency, there can't be a global variable holding where messages came from
         :return:
         """
-        if data['channel'] == self.details.get_nick():
-            self.send_to_user(data['nick'], text)
+        if data["channel"] == self.details.get_nick():
+            self.send_to_user(data["nick"], text)
         else:
             self.send_channel(text)
 
     def raw_send(self, message):
-        self.send_queue.put(message.encode() + '\r\n'.encode())
+        self.send_queue.put(f"{message}\r\n".encode())
 
     def receive(self):
         """
@@ -69,8 +70,8 @@ class Connection(object):
                 return False
         except socket.timeout:
             return False
-        data = data.decode('UTF-8', errors='replace')
-        #print('received: \n' + data)
+        data = data.decode("UTF-8", errors="replace")
+        # print('received: \n' + data)
         data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
@@ -80,24 +81,24 @@ class Connection(object):
             data = data.rstrip()
             self.data = data
 
-            splited = data.split(' ')
+            splited = data.split(" ")
             if not len(splited) >= 2:
                 continue
             command = splited[1]
             #         print(command)
-            if data.split(' ')[0] == 'PING':
+            if data.split(" ")[0] == "PING":
                 self.ping_observable.input(data, self)
-            elif command == 'JOIN':
+            elif command == "JOIN":
                 self.join_observable.input(data, self)
-            elif command == 'PART' or command == 'QUIT':
+            elif command == "PART" or command == "QUIT":
                 self.leave_observable.input(data, self)
-            elif command == 'KICK':
+            elif command == "KICK":
                 self.kick_observable.input(data, self)
-            elif command == 'NICK':
+            elif command == "NICK":
                 self.nick_change_observable.input(data, self)
-            elif command == 'NOTICE':
+            elif command == "NOTICE":
                 self.notice_observable.input(data, self)
-            elif command == 'PRIVMSG':
+            elif command == "PRIVMSG":
                 self.priv_msg_observable.input(data, self)
             else:
                 try:
@@ -109,7 +110,7 @@ class Connection(object):
         return True
 
     def is_idented(self, user: str):
-        self.send_to_user('NickServ', 'ACC ' + user)
+        self.send_to_user("NickServ", f"ACC {user}")
         with self.condition_lock:
             while user not in self.idented_look_up:
                 self.condition_lock.wait()
@@ -136,19 +137,28 @@ class Connection(object):
         """
         establish the connection
         """
-        self.wraper = ssl.create_default_context()
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socker = socket.create_connection((self.details.get_server(), self.details.get_port()))
-        self.irc =self.wraper.wrap_socket(socker, server_hostname=self.details.get_server())
-        #print(self.irc.recv(512))
-        self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
+        socker = socket.create_connection(
+            (self.details.get_server(), self.details.get_port())
+        )
+        if self.details.get_ssl().lower() != "false":
+            self.wraper = ssl.create_default_context()
+            self.irc = self.wraper.wrap_socket(
+                socker, server_hostname=self.details.get_server()
+            )
+        else:
+            self.irc = socker
+        # print(self.irc.recv(512))
+        self.irc.send(f"NICK {self.details.get_nick()}\r\n".encode())
         self.irc.send("USER botty botty botty :Botty \n".encode())
-        if (self.details.get_pwd() != ''):
-            self.send_to_user("NICKSERV", "identify " + self.details.get_nick() + " " + self.details.get_pwd() + ' ')
-        self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
-        self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
-        self.irc.send("MODE ".encode()+self.details.get_nick().encode()+" -R".encode()+'\r\n'.encode())
-
+        if self.details.get_pwd() != "":
+            self.send_to_user(
+                "NICKSERV",
+                f"identify {self.details.get_nick()} {self.details.get_pwd()} ",
+            )
+        self.irc.send(f"JOIN {self.details.get_channel()}\r\n".encode())
+        self.irc.send(f"WHO {self.details.get_channel()}\r\n".encode())
+        self.irc.send(f"MODE {self.details.get_nick()} -R\r\n".encode())
 
         _thread.start_new_thread(self.sender, ())
 
