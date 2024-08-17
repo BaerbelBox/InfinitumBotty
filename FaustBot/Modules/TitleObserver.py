@@ -44,9 +44,13 @@ class TitleObserver(PrivMsgObserverPrototype):
             raise (Exception("Refusing to parse bare IPv4 Addresses"))
         if re.search("https?://music.youtube.com/", url):
             url = url.replace("music.youtube.com/", "www.youtube.com/", 1)
+        if re.search("https?://youtu.be/", url):
+            url = url.replace("youtu.be/", "www.youtube.com/watch?v=", 1)
 
         if re.search("https?://[^/]*youtube.com/shorts/", url):
-            title_re = re.compile('''"reelPlayerHeaderRenderer":{"reelTitleText":{"runs":\[{"text":"([^"]*)"''')
+            title_re = re.compile(
+                '''"reelPlayerHeaderRenderer":{"reelTitleText":{"runs":\[{"text":"([^"]*)"'''
+            )
             headers["User-Agent"] = "curl/7.81.0"
         elif re.search("https?://[^/]*youtube.com/", url):
             title_re = re.compile(
