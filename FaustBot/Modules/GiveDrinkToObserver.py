@@ -42,8 +42,8 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
             type = message_parts[2].lower()
         if receiver is None:
             return
-        requester = data["nick"].lower()
-        if receiver.lower() == requester:
+        requester = data["nick"]
+        if receiver.lower() == requester.lower():
             if type == "kaffee":
                 connection.send_back("Fehler 418: Ich bin eine Teekanne",data)
             else:
