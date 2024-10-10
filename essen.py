@@ -157,7 +157,7 @@ essen = [
     'ein schokoladiges Miniaturmodell des Sonnensystems mit Pluto als Kirsche','Gold, Weihrauch und Myrrhe',
     'den kulinarischen Epitaph des Küchenchefs','ein halsbrecherisches Stuntmanöver mit klapperndem Geschirr',
     'einen nicht wie die Abbildung auf der Karte aussehenden Burger','einen echten Cheeseburger zum Mitnnehmen',
-    'gefälschten Kokoskuchen mit Hornhautraspel','ein Replikat der Fettecke','einen einzelnen karamellisierten Marshmallow',
+    'ein Replikat der Fettecke','einen einzelnen karamellisierten Marshmallow',
     'einen seltenen niederländischen Bergkäse','den Nuclear Football mit Gebrauchsanleitung',
     'ein Schokoladentörtchen mit geschmolzenem Kern','eine Partypackung Salzstangen',
     'ein deftig belegtes Laugenbrötchen','zwei Fischfrikadellen mit Tomatensalat','die Reste der gestrigen Grillfeier',
