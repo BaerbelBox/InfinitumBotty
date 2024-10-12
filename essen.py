@@ -197,7 +197,7 @@ essen = [
     'klassisch in Bierteig frittierte Fish`n Chips','ein Stilleben aus Wachs','eine Schale ungewürztes Erbsenpüree',
     'ein gegrilltes Hähnchen mit einer würzigen Tomaten-Curry-Soße','eine kaum Licht spendende Waltranfunsel',
     'gedämpfte Miesmuscheln mit knusprigen Pommes','einen Geburtstagskuchen mit zu wenig Kerzen',
-    'einen seltsam grünlich schimmernden Leberkäse','eine angebrochene Packung Oreos',
+    'eine angebrochene Packung Oreos',
     'ein Krokodil','eine überraschende Wendung der Dinge','eine dramatische Intrige',
     'einen geheimnisvollen Schlüssel unter einer Speiseglocke','einen Rücktrittsbrief des Papstes',
     'ein unlösbares Rätsel','das Leibgericht von Theodore Roosevelt','die Bestellung des Sitznachbarn',
