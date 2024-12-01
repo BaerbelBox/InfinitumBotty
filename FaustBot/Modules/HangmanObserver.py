@@ -63,8 +63,6 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if messageLower.startswith('.look'):
             self.look(data, connection)
         if messageLower.startswith('.resetscore') and len(data['message'].split(' ')) < 2:
-            self.confirm_reset(data, connection)
-        if messageLower == '.resetscore ' + data['nick'] + ' JA':
             self.reset(data, connection)
         if messageLower.startswith('.handelete '):
             self.delete_HanWord(data, connection)
@@ -83,14 +81,9 @@ class HangmanObserver(PrivMsgObserverPrototype):
         score_provider.delete_score(data['nick'])
         connection.send_back("Dein Score wurde gelöscht, "+data['nick'], data)
 
-    def confirm_reset(self, data, connection):
-        connection.send_back('Möchtest du deinen Hangman Punktestand wirklich löschen, ' + data['nick'] + '? ' +
-        'Wenn ja, antworte bitte mit ".resetscore deinnick JA". Wenn nein, musst du nichts tun.', data)
-        print(data['message'])
-
     def look(self,data, connection):
         if self.worder != '':
-            connection.send_channel("Das Wort kommt von: "+self.worder )
+            connection.send_channel("Das Wort kommt von: "+self.worder)
         connection.send_channel(self.prepare_word(data))
         self.hint(data,connection)
 
