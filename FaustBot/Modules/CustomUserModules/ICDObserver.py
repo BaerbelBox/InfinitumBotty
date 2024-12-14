@@ -21,17 +21,18 @@ class ICDObserver(PrivMsgObserverPrototype):
         return None
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data["channel"] == connection.details.get_channel():
-            regex = r"\b(\w\d{2}\.?\d?\d?)\b"
-            codes = re.findall(regex, data["message"])
-            for code in codes:
-                code = code.capitalize()
-                text = self.icd10_dict.get(code, False)
-                if text == False:
-                    if "." in code:
-                        code += "-"
-                    else:
-                        code += ".-"
-                text = self.icd10_dict.get(code, False)
-                if text:
-                    connection.send_back(f"{code} - {text}", data)
+        if data["message"].startswith(".icd "):
+            if data["channel"] == connection.details.get_channel():
+                regex = r"\b(\w\d{2}\.?\d?\d?)\b"
+                codes = re.findall(regex, data["message"])
+                for code in codes[:5]:
+                    code = code.capitalize()
+                    text = self.icd10_dict.get(code, False)
+                    if text == False:
+                        if "." in code:
+                            code += "-"
+                        else:
+                            code += ".-"
+                    text = self.icd10_dict.get(code, False)
+                    if text:
+                        connection.send_back(f"{code} - {text}", data)
