@@ -3,6 +3,7 @@
 
 # Directory of the virtual environment
 #VENV="./FaustBotVEnv"
+export PYTHONDONTWRITEBYTECODE=1
 
 venv() {
   :
