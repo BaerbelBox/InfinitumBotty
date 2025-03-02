@@ -152,12 +152,15 @@ class Connection(object):
         self.irc.send(f"NICK {self.details.get_nick()}\r\n".encode())
         self.irc.send("USER botty botty botty :Botty \n".encode())
         if self.details.get_pwd() != "":
-            self.send_to_user(
-                "NICKSERV",
-                f"identify {self.details.get_nick()} {self.details.get_pwd()} ",
+            self.irc.send(
+                f"PRIVMSG NICKSERV :identify {self.details.get_nick()} {self.details.get_pwd()} \r\n".encode()
             )
-        # Sleep 15 Seconds to ensure that the Bot is fully logged in.
-        time.sleep(15.123)
+            # self.send_to_user(
+            #     "NICKSERV",
+            #     f"identify {self.details.get_nick()} {self.details.get_pwd()} ",
+            # )
+        # Sleep a bit to ensure that the Bot is fully logged in.
+        time.sleep(2.123)
         self.irc.send(f"JOIN {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"WHO {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"MODE {self.details.get_nick()} -R\r\n".encode())
