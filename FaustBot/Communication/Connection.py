@@ -156,8 +156,8 @@ class Connection(object):
                 "NICKSERV",
                 f"identify {self.details.get_nick()} {self.details.get_pwd()} ",
             )
-        # Sleep 5 Seconds to ensure that the Bot is fully logged in.
-        time.sleep(5.123)
+        # Sleep 15 Seconds to ensure that the Bot is fully logged in.
+        time.sleep(15.123)
         self.irc.send(f"JOIN {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"WHO {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"MODE {self.details.get_nick()} -R\r\n".encode())
