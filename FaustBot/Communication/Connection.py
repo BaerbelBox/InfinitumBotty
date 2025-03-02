@@ -160,7 +160,7 @@ class Connection(object):
             #     f"identify {self.details.get_nick()} {self.details.get_pwd()} ",
             # )
         # Sleep a bit to ensure that the Bot is fully logged in.
-        time.sleep(2.123)
+        time.sleep(11.2233)
         self.irc.send(f"JOIN {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"WHO {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"MODE {self.details.get_nick()} -R\r\n".encode())
