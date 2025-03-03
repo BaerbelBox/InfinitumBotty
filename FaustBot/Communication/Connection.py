@@ -3,6 +3,8 @@ import queue
 import socket
 import time
 import ssl
+import os.path
+
 from threading import Condition
 
 from FaustBot.Communication.JoinObservable import JoinObservable
@@ -137,12 +139,17 @@ class Connection(object):
         """
         establish the connection
         """
+        use_certfp = os.path.isfile("certfp.pem")
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socker = socket.create_connection(
             (self.details.get_server(), self.details.get_port())
         )
         if self.details.get_ssl().lower() != "false":
-            self.wraper = ssl.create_default_context()
+            if use_certfp:
+                self.wraper = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+                self.wraper.load_cert_chain("certfp.pem")
+            else:
+                self.wraper = ssl.create_default_context()
             self.irc = self.wraper.wrap_socket(
                 socker, server_hostname=self.details.get_server()
             )
@@ -155,12 +162,8 @@ class Connection(object):
             self.irc.send(
                 f"PRIVMSG NICKSERV :identify {self.details.get_nick()} {self.details.get_pwd()} \r\n".encode()
             )
-            # self.send_to_user(
-            #     "NICKSERV",
-            #     f"identify {self.details.get_nick()} {self.details.get_pwd()} ",
-            # )
-        # Sleep a bit to ensure that the Bot is fully logged in.
-        time.sleep(11.2233)
+            # Sleep a bit to ensure that the Bot is fully logged in.
+            time.sleep(11.2233)
         self.irc.send(f"JOIN {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"WHO {self.details.get_channel()}\r\n".encode())
         self.irc.send(f"MODE {self.details.get_nick()} -R\r\n".encode())
