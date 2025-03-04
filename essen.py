@@ -48,7 +48,7 @@ essen = [
     'mildes Möhrenmischmasch','gegrillten Kürbis','knusprige Frühlingsrollen mit Dip',
     'drei frische Onigiri','den Kraftriegel der deutschen Arbeiterklasse',
     'Bratwurst mit Sauerkraut','ein Bündel Petersilie',
-    'eine Schale Stachelbeerkompott','Stulle mit Brot','einen laienhaft zubereiteten Fugofisch',
+    'eine Schale Stachelbeerkompott','Stulle mit Brot',
     'ein Stück kichernden Käsekuchen mit Himbeeren','eine Handvoll rohe Mandeln',
     'die Rechnung','entzückendes Erbsengemüse','Eierlikörkuchen mit vollständig ausgebackenem Eierlikör',
     'drei Stücke traurige trockene Torte','Wassermelonensalat in einer ausgehöhlten Wassermelone',
@@ -284,5 +284,3 @@ essen = [
     'einen Topf Matzah-Ball-Suppe','einen Laib geflochtenes Challah','eine XXL-Packung Merci',
     'Pekingente mit Hoisin-Sauce',
 ]
-
-
