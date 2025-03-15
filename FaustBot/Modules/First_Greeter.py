@@ -26,6 +26,7 @@ class First_Greeter(JoinObserverPrototype):
             new_nick = data["nick"]
             if (
                 new_nick.startswith("Guest")
+                or new_nick.startswith("NeuerGast")
                 or UserProvider().get_characters(new_nick) < 100
             ):
                 sleep(20)

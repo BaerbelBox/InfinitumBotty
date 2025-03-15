@@ -33,6 +33,7 @@ class Greeter(JoinObserverPrototype):
             joined_user = data["nick"]
             if (
                 joined_user.startswith("Guest")
+                or new_nick.startswith("NeuerGast")
                 or UserProvider().get_characters(joined_user) < 100
             ):
                 return
